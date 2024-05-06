@@ -1,0 +1,59 @@
+/*css должен находиться в папке static, однако когда он находится там, то */
+/*html не может подгрузить этот css.*/
+
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap');
+*
+{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Quicksand', sans-serif;
+}
+
+body{
+    background-color: #121212;
+    color: white;
+}
+
+
+h4  {
+    display: flex;
+    justify-content: center;
+    color: dodgerblue;
+    text-transform: uppercase;
+}
+
+
+.center-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Высота контейнера равна высоте экрана */
+}
+
+.center-block {
+    background-color: #222222;
+    padding-right: 20px;
+    padding-left: 20px;
+    padding-top: 25px;
+    padding-bottom: 25px;
+    border-radius: 4px;
+
+}
+.form-control {
+    background-color: #121212;
+    border-color: #2F3032;
+}
+.btn-primary {
+    margin-left: 15px;
+    width: 160px;
+}
+.sign-up-href {
+    margin-left: 60px;
+}
+.wrong-data {
+    color: orangered;
+    font-size: 6px;
+}
+
+
