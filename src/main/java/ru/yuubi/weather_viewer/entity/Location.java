@@ -22,6 +22,9 @@ public class Location {
     @Column(name = "Longitude")
     private double longitude;
 
+    @ManyToOne
+    @JoinColumn(name = "UserId", insertable = false, updatable = false)
+    private User user;
     public Location() {
     }
 

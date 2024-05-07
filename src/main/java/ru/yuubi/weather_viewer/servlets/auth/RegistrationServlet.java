@@ -10,10 +10,13 @@ import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.WebContext;
 import org.thymeleaf.web.IWebExchange;
 import org.thymeleaf.web.servlet.JakartaServletWebApplication;
+import ru.yuubi.weather_viewer.entity.Location;
 import ru.yuubi.weather_viewer.entity.User;
 import ru.yuubi.weather_viewer.listener.ThymeleafListener;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Enumeration;
 
 @WebServlet("/signup")
@@ -25,26 +28,41 @@ public class RegistrationServlet extends HttpServlet {
         String login = req.getParameter("login");
         String password = req.getParameter("password");
 
-        SessionFactory factory = new Configuration()
-                .configure("hibernate.cfg.xml")
-                .addAnnotatedClass(User.class)
-                .buildSessionFactory();
+        HttpSession browserSession = req.getSession();
+        browserSession.setMaxInactiveInterval(60*60*24);
+
+        String sessionGUID = browserSession.getId();
+
+        Cookie cookie = new Cookie("sessionGUID", sessionGUID);
+        cookie.setMaxAge(60*60*24);
+        resp.addCookie(cookie);
+
+        SessionFactory factory = (SessionFactory) getServletContext().getAttribute("sessionFactory");
 
         try(factory) {
-            Session session = factory.getCurrentSession();
+            Session hibernateSession = factory.getCurrentSession();
+
             User user = new User(login, password);
-            session.beginTransaction();
-            session.persist(user);
-            session.getTransaction().commit();
+
+            hibernateSession.beginTransaction();
+            hibernateSession.persist(user);
+            hibernateSession.getTransaction().commit();
+
+            int userId = user.getId();
+
+//            LocalDateTime now = LocalDateTime.now();
+//            LocalDateTime tomorrow = now.plusDays(1);
+//            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+//            String formattedDateTime = tomorrow.format(formatter);
+//
+//            ru.yuubi.weather_viewer.entity.Session session = new ru.yuubi.weather_viewer.entity.Session(sessionGUID, userId, formattedDateTime);
+
+
         }
 
-//        HttpSession session = req.getSession();
-//        String sessionUID = session.getId();
-//        session.setAttribute();
-//
-//        Cookie cookie = new Cookie("sessionUID", sessionUID);
-//        cookie.setMaxAge(60*60*24);
-//        resp.addCookie(cookie);
+
+
+
 
 
 //        System.out.println(session.getId());
