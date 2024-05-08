@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 
 @Entity
 @Table(name = "sessions")
-public class Session {
+public class SessionEntity {
     @Id
     private String id;
     @Column(name = "UserId")
@@ -17,10 +17,10 @@ public class Session {
     @JoinColumn(name = "UserId", insertable = false, updatable = false)
     private User user;
 
-    public Session() {
+    public SessionEntity() {
     }
 
-    public Session(String id, int userId, String expiresAt) {
+    public SessionEntity(String id, int userId, String expiresAt) {
         this.id = id;
         this.userId = userId;
         this.expiresAt = expiresAt;

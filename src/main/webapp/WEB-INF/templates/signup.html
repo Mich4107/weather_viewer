@@ -13,7 +13,7 @@
             <form th:action="@{/signup}" method="post">
 
                 <div class="form-group col-md-6">
-                    <label for="inputEmail4">Login</label>
+                    <label for="inputEmail4">Login</label> <span class="wrong-data" th:text="${userAlreadyExists}" style="color: orangered; font-size: 12px; margin-left: 121px"></span>
                     <input class="form-control" id="inputEmail4" type="text" name="login" required>
                 </div>
 

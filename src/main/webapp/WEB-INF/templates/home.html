@@ -5,7 +5,10 @@
     <title>Home</title>
 </head>
 <body>
-Hello
-<p th:text="${loggedInUser}"></p>
+<p th:text="'Hello dear '+${userLogin}+', you was automatically redirect here'"></p>
+
+<form action="/logout" method="post">
+    <button type="submit">logout</button>
+</form>
 </body>
 </html>
