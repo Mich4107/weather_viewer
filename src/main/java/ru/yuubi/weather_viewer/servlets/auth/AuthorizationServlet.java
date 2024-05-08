@@ -38,10 +38,9 @@ public class AuthorizationServlet extends HttpServlet {
             return;
         }
         Cookie[] cookies = req.getCookies();
-        String cookieName = "sessionGUID";
+        String cookieName = "JSESSIONID";
 
         for(Cookie c : cookies) {
-
             if(c.getName().equals(cookieName)) {
                 String sessionGUID = c.getValue();
                 SessionEntity sessionEntity = sessionDAO.getSessionEntity(sessionGUID);
@@ -49,6 +48,7 @@ public class AuthorizationServlet extends HttpServlet {
                     resp.sendRedirect("/home");
                     return;
                 }
+                System.out.println("~~~~~~~~~~~~~~~~~~~~~~ In AuthorizationServlet sessionEntity is NULL ~~~~~~~~~~~~~~~~~~~~~~");
             }
         }
         getServletContext().getRequestDispatcher("/WEB-INF/templates/signin.html").forward(req, resp);
@@ -68,14 +68,29 @@ public class AuthorizationServlet extends HttpServlet {
 
         int userId = user.getId();
 
-        HttpSession browserSession = req.getSession();
-        String sessionGUID = browserSession.getId();
-        //
-        browserSession.setMaxInactiveInterval(60*60*24);
-        //
-        Cookie cookie = new Cookie("sessionGUID", sessionGUID);
-        cookie.setMaxAge(60*60*24);
-        resp.addCookie(cookie);
+        Cookie[] cookies = req.getCookies();
+        String searchCookieName = "JSESSIONID";
+        Cookie jsessionidCookie = null;
+
+        for(Cookie c : cookies) {
+            if(c.getName().equals(searchCookieName)) {
+                jsessionidCookie = c;
+                break;
+            }
+        }
+
+        if(jsessionidCookie != null) {
+            jsessionidCookie.setMaxAge(60*60*24);
+            jsessionidCookie.setHttpOnly(true);
+        } else {
+            System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~JSESSIONID IS NULL~~~~~~~~~~~~~~~AUTHO~~~~~~~~~~~~~~~~~~~~~~");
+            jsessionidCookie = new Cookie("JSESSIONID", req.getSession().getId());
+            jsessionidCookie.setMaxAge(60*60*24);
+            jsessionidCookie.setHttpOnly(true);
+            resp.addCookie(jsessionidCookie);
+        }
+
+        String sessionGUID = jsessionidCookie.getValue();
 
         LocalDateTime now = LocalDateTime.now();
         LocalDateTime tomorrow = now.plusDays(1);
@@ -83,6 +98,7 @@ public class AuthorizationServlet extends HttpServlet {
         String formattedDateTime = tomorrow.format(formatter);
 
         SessionEntity sessionEntity = new SessionEntity(sessionGUID, userId, formattedDateTime);
+
         sessionDAO.save(sessionEntity);
 
         resp.sendRedirect("/home");

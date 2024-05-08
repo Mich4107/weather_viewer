@@ -19,11 +19,10 @@ public class DeauthenticationServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         Cookie[] cookies = req.getCookies();
-        String searchCookieName = "sessionGUID";
-        String sessionGUIDValue;
+        String searchCookieName = "JSESSIONID";
         for(Cookie cookie : cookies) {
             if(cookie.getName().equals(searchCookieName)) {
-                sessionGUIDValue = cookie.getValue();
+                String sessionGUIDValue = cookie.getValue();
                 cookie.setMaxAge(0);
                 resp.addCookie(cookie);
                 sessionDAO.removeSession(sessionGUIDValue);

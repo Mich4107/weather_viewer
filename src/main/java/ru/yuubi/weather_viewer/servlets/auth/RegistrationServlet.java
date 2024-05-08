@@ -16,6 +16,7 @@ import ru.yuubi.weather_viewer.model.UserService;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Arrays;
 
 @WebServlet("/signup")
 public class RegistrationServlet extends HttpServlet {
@@ -25,17 +26,20 @@ public class RegistrationServlet extends HttpServlet {
 
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
         Cookie[] cookies = req.getCookies();
-        String cookieName = "sessionGUID";
+        String searchCookieName = "JSESSIONID";
 
         for(Cookie c : cookies) {
-            if(c.getName().equals(cookieName)) {
-                System.out.println("In /signup servlet isHttpOnly: "+c.isHttpOnly()+", getSecure(): "+c.getSecure()+", getDomain: "+c.getDomain());
+            System.out.println("JAJAJAJAJAJA");
+            if(c.getName().equals(searchCookieName)) {
                 String sessionGUID = c.getValue();
                 SessionEntity sessionEntity = sessionDAO.getSessionEntity(sessionGUID);
                 if(sessionEntity != null) {
+                    System.out.println("Test sessionEntity != null~~~~");
                     resp.sendRedirect("/home");
                     return;
                 }
+                System.out.println("~~~~~~~YOU ARE HERE so sessionEntity == null~~~~~~~~~~~~~~~~~");
+
             }
         }
         getServletContext().getRequestDispatcher("/WEB-INF/templates/signup.html").forward(req, resp);
@@ -59,21 +63,28 @@ public class RegistrationServlet extends HttpServlet {
 
         int userId = user.getId();
 
-        HttpSession browserSession = req.getSession();
+        Cookie[] cookies = req.getCookies();
+        String cookieName = "JSESSIONID";
+        Cookie cookie = null;
 
-        String sessionGUID = browserSession.getId();
-
-        //browserSession.setMaxInactiveInterval(0);
-        //если оставлять это только здесь а в authorization этого не писать,
-        //то если signin - то он редиректит и на signin и на signup
-        //а если signup - то только через signup редиректит
-        //а вы authorization servlet такая фишка не работает
-        browserSession.setMaxInactiveInterval(60*60*24);
-
-
-        Cookie cookie = new Cookie("sessionGUID", sessionGUID);
-        cookie.setMaxAge(60*60*24);
-        resp.addCookie(cookie);
+        for(Cookie c : cookies) {
+            if(c.getName().equals(cookieName)) {
+                cookie = c;
+                break;
+            }
+        }
+        if(cookie != null) {
+            cookie.setMaxAge(60*60*24);
+            cookie.setHttpOnly(true);
+            resp.addCookie(cookie);
+        } else {
+            System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~JSESSIONID DIDN'T CREATED~~~~~~~~~~~~REGISTR~~~~~~~~~~~~~~~~~~~~~~~~~");
+            cookie = new Cookie("JSESSIONID", req.getSession().getId());
+            cookie.setMaxAge(60*60*24);
+            cookie.setHttpOnly(true);
+            resp.addCookie(cookie);
+        }
+        String sessionGUID = cookie.getValue();
 
         LocalDateTime now = LocalDateTime.now();
         LocalDateTime tomorrow = now.plusDays(1);
@@ -81,6 +92,7 @@ public class RegistrationServlet extends HttpServlet {
         String formattedDateTime = tomorrow.format(formatter);
 
         SessionEntity sessionEntity = new SessionEntity(sessionGUID, userId, formattedDateTime);
+
         sessionDAO.save(sessionEntity);
 
         resp.sendRedirect("/home");

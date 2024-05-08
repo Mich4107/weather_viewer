@@ -31,27 +31,30 @@ public class HomeServlet extends HttpServlet {
         WebContext context = new WebContext(webExchange);
 
         Cookie[] cookies = req.getCookies();
-        String cookieName = "sessionGUID";
+        String searchCookieName = "JSESSIONID";
 
         for(Cookie c : cookies) {
-            if(c.getName().equals(cookieName)) {
+            if(c.getName().equals(searchCookieName)) {
 
                 String sessionGUID = c.getValue();
                 SessionEntity sessionEntity = sessionDAO.getSessionEntity(sessionGUID);
+
+                if(sessionEntity == null) {
+                    System.out.println("U cannot access to home page without logging in");
+                    resp.sendRedirect("/signup");
+                    return;
+                }
 
                 int userId = sessionEntity.getUserId();
                 User user = userDAO.getUserById(userId);
                 String login = user.getLogin();
 
-                if(sessionEntity != null) {
-                    context.setVariable("userLogin", login);
-                    templateEngine.process("home", context, resp.getWriter());
-                    return;
-                }
+                context.setVariable("userLogin", login);
+                templateEngine.process("home", context, resp.getWriter());
+                return;
             }
         }
-
-        getServletContext().getRequestDispatcher("/WEB-INF/templates/home.html").forward(req, resp);
+        resp.sendRedirect("/signup");
     }
 
     @Override
