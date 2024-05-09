@@ -2,7 +2,7 @@ package ru.yuubi.weather_viewer.utils;
 
 import org.mindrot.jbcrypt.BCrypt;
 
-public class PasswordEncryptor {
+public class PasswordEncryptorUtil {
     public static String hashPassword(String password) {
         return BCrypt.hashpw(password, BCrypt.gensalt());
     }

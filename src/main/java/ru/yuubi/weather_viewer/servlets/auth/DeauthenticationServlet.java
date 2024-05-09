@@ -15,7 +15,6 @@ import java.io.IOException;
 @WebServlet("/logout")
 public class DeauthenticationServlet extends HttpServlet {
 
-    private SessionDAO sessionDAO = new SessionDAO();
     private AuthService authService = new AuthService();
 
     @Override

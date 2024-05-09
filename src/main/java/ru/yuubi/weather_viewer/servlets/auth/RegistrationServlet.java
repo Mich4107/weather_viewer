@@ -12,6 +12,8 @@ import ru.yuubi.weather_viewer.dao.UserDAO;
 import ru.yuubi.weather_viewer.entity.SessionEntity;
 import ru.yuubi.weather_viewer.entity.User;
 import ru.yuubi.weather_viewer.service.AuthService;
+import ru.yuubi.weather_viewer.utils.HibernateUtil;
+import ru.yuubi.weather_viewer.utils.PasswordEncryptorUtil;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
@@ -19,8 +21,6 @@ import java.util.UUID;
 
 @WebServlet("/signup")
 public class RegistrationServlet extends HttpServlet {
-    private UserDAO userDAO = new UserDAO();
-    private SessionDAO sessionDAO = new SessionDAO();
     private AuthService authService = new AuthService();
 
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
@@ -39,13 +39,13 @@ public class RegistrationServlet extends HttpServlet {
         WebContext context = new WebContext(webExchange);
 
         User user = new User(login, password);
-        if(userDAO.getUserByLogin(login) != null) {
+        if(authService.getUserByLogin(login) != null) {
             context.setVariable("userAlreadyExists", "login already exists");
             templateEngine.process("signup", context, resp.getWriter());
             return;
         }
 
-        userDAO.save(user);
+        authService.saveUser(user);
 
         int userId = user.getId();
 
@@ -55,7 +55,7 @@ public class RegistrationServlet extends HttpServlet {
 
         SessionEntity sessionEntity = new SessionEntity(cookie.getValue(), userId, LocalDateTime.now().plusDays(1));
 
-        sessionDAO.save(sessionEntity);
+        authService.saveSessionEntity(sessionEntity);
 
         resp.sendRedirect("/home");
     }

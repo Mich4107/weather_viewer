@@ -19,7 +19,7 @@ import java.io.IOException;
 public class HomeServlet extends HttpServlet {
     private AuthService authService = new AuthService();
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         TemplateEngine templateEngine = (TemplateEngine) getServletContext().getAttribute("templateEngine");
         IWebExchange webExchange = JakartaServletWebApplication.buildApplication(getServletContext()).buildExchange(req, resp);
         WebContext context = new WebContext(webExchange);
