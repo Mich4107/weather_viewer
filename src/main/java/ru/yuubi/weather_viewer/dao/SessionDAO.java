@@ -42,4 +42,13 @@ public class SessionDAO {
             session.getTransaction().commit();
         }
     }
+
+    public void update(SessionEntity sessionEntity) {
+        Session session = sessionFactory.getCurrentSession();
+        try(session) {
+            session.beginTransaction();
+            session.merge(sessionEntity);
+            session.getTransaction().commit();
+        }
+    }
 }

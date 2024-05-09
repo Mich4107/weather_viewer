@@ -24,10 +24,10 @@ public class RegistrationServlet extends HttpServlet {
     private AuthService authService = new AuthService();
 
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
-        if(authService.isSessionCookieExists(req)) {
-            resp.sendRedirect("home");
-            return;
-        }
+//        if(authService.isSessionCookieExists(req)) {
+//            resp.sendRedirect("/home");
+//            return;
+//        }
         getServletContext().getRequestDispatcher("/WEB-INF/templates/signup.html").forward(req, resp);
     }
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
@@ -50,10 +50,10 @@ public class RegistrationServlet extends HttpServlet {
         int userId = user.getId();
 
         Cookie cookie = new Cookie("sessionId", UUID.randomUUID().toString());
-        cookie.setMaxAge(60*60*24);
+        cookie.setMaxAge(60*10);
         resp.addCookie(cookie);
 
-        SessionEntity sessionEntity = new SessionEntity(cookie.getValue(), userId, LocalDateTime.now().plusDays(1));
+        SessionEntity sessionEntity = new SessionEntity(cookie.getValue(), userId, LocalDateTime.now().plusSeconds(60*10));
 
         authService.saveSessionEntity(sessionEntity);
 

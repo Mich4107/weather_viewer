@@ -16,17 +16,18 @@ public class AuthService {
     public void saveUser(User user) {
         String password = user.getPassword();
         String hashedPassword = PasswordEncryptorUtil.hashPassword(password);
-        System.out.println(hashedPassword);
         user.setPassword(hashedPassword);
         userDAO.save(user);
     }
 
     public User getUserByLoginAndPassword(String login, String password) {
         User user = userDAO.getUserByLogin(login);
-        String hashedPasswordFromDB = user.getPassword();
-        boolean isPasswordsEquals = PasswordEncryptorUtil.checkPassword(password, hashedPasswordFromDB);
-        if(isPasswordsEquals) {
-            return user;
+        if(user != null) {
+            String hashedPasswordFromDB = user.getPassword();
+            boolean isPasswordsEquals = PasswordEncryptorUtil.checkPassword(password, hashedPasswordFromDB);
+            if(isPasswordsEquals) {
+                return user;
+            }
         }
         return null;
     }
@@ -63,21 +64,21 @@ public class AuthService {
         return null;
     }
 
-    public boolean isSessionCookieExists(HttpServletRequest req){
-        Cookie[] cookies = req.getCookies();
-        String searchCookieName = "sessionId";
-
-        for(Cookie c : cookies) {
-            if(c.getName().equals(searchCookieName)) {
-                String sessionGUID = c.getValue();
-                SessionEntity sessionEntity = sessionDAO.getSessionEntity(sessionGUID);
-                if(sessionEntity != null) {
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
+//    public boolean isSessionCookieExists(HttpServletRequest req){
+//        Cookie[] cookies = req.getCookies();
+//        String searchCookieName = "sessionId";
+//
+//        for(Cookie c : cookies) {
+//            if(c.getName().equals(searchCookieName)) {
+//                String sessionGUID = c.getValue();
+//                SessionEntity sessionEntity = sessionDAO.getSessionEntity(sessionGUID);
+//                if(sessionEntity != null) {
+//                    return true;
+//                }
+//            }
+//        }
+//        return false;
+//    }
 
     public void deleteSessionCookie(HttpServletRequest req, HttpServletResponse resp){
         Cookie[] cookies = req.getCookies();

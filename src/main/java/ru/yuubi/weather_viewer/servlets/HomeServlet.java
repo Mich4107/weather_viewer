@@ -5,6 +5,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.WebContext;
 import org.thymeleaf.web.IWebExchange;
@@ -25,15 +26,7 @@ public class HomeServlet extends HttpServlet {
         WebContext context = new WebContext(webExchange);
 
 
-        String sessionGUID = authService.getSessionCookieValue(req);
-
-        if(sessionGUID == null) {
-            resp.sendRedirect("/signup");
-            return;
-        }
-
-        SessionEntity sessionEntity = authService.getSessionEntityByGUID(sessionGUID);
-
+        SessionEntity sessionEntity = (SessionEntity) req.getSession().getAttribute("sessionEntity");
         String login = authService.getUserLoginFromSessionEntity(sessionEntity);
 
         context.setVariable("userLogin", login);

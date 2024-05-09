@@ -29,11 +29,6 @@ public class AuthenticationServlet extends HttpServlet {
             return;
         }
 
-        if(authService.isSessionCookieExists(req)) {
-            resp.sendRedirect("/home");
-            return;
-        }
-
         getServletContext().getRequestDispatcher("/WEB-INF/templates/signin.html").forward(req, resp);
     }
 
@@ -52,10 +47,10 @@ public class AuthenticationServlet extends HttpServlet {
         int userId = user.getId();
 
         Cookie cookie = new Cookie("sessionId", UUID.randomUUID().toString());
-        cookie.setMaxAge(60*60*24);
+        cookie.setMaxAge(60*10);
         resp.addCookie(cookie);
 
-        SessionEntity sessionEntity = new SessionEntity(cookie.getValue(), userId, LocalDateTime.now().plusDays(1));
+        SessionEntity sessionEntity = new SessionEntity(cookie.getValue(), userId, LocalDateTime.now().plusSeconds(60*10));
         authService.saveSessionEntity(sessionEntity);
 
         resp.sendRedirect("/home");
