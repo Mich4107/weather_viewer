@@ -11,40 +11,26 @@ import ru.yuubi.weather_viewer.dao.SessionDAO;
 import ru.yuubi.weather_viewer.dao.UserDAO;
 import ru.yuubi.weather_viewer.entity.SessionEntity;
 import ru.yuubi.weather_viewer.entity.User;
-import ru.yuubi.weather_viewer.model.UserService;
+import ru.yuubi.weather_viewer.service.AuthService;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.Arrays;
+import java.util.UUID;
 
 @WebServlet("/signup")
 public class RegistrationServlet extends HttpServlet {
     private UserDAO userDAO = new UserDAO();
     private SessionDAO sessionDAO = new SessionDAO();
-    private UserService userService = new UserService();
+    private AuthService authService = new AuthService();
 
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
-        Cookie[] cookies = req.getCookies();
-        String searchCookieName = "JSESSIONID";
-
-        for(Cookie c : cookies) {
-            System.out.println("JAJAJAJAJAJA");
-            if(c.getName().equals(searchCookieName)) {
-                String sessionGUID = c.getValue();
-                SessionEntity sessionEntity = sessionDAO.getSessionEntity(sessionGUID);
-                if(sessionEntity != null) {
-                    System.out.println("Test sessionEntity != null~~~~");
-                    resp.sendRedirect("/home");
-                    return;
-                }
-                System.out.println("~~~~~~~YOU ARE HERE so sessionEntity == null~~~~~~~~~~~~~~~~~");
-
-            }
+        if(authService.isSessionCookieExists(req)) {
+            resp.sendRedirect("home");
+            return;
         }
         getServletContext().getRequestDispatcher("/WEB-INF/templates/signup.html").forward(req, resp);
     }
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         String login = req.getParameter("login");
         String password = req.getParameter("password");
 
@@ -63,35 +49,11 @@ public class RegistrationServlet extends HttpServlet {
 
         int userId = user.getId();
 
-        Cookie[] cookies = req.getCookies();
-        String cookieName = "JSESSIONID";
-        Cookie cookie = null;
+        Cookie cookie = new Cookie("sessionId", UUID.randomUUID().toString());
+        cookie.setMaxAge(60*60*24);
+        resp.addCookie(cookie);
 
-        for(Cookie c : cookies) {
-            if(c.getName().equals(cookieName)) {
-                cookie = c;
-                break;
-            }
-        }
-        if(cookie != null) {
-            cookie.setMaxAge(60*60*24);
-            cookie.setHttpOnly(true);
-            resp.addCookie(cookie);
-        } else {
-            System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~JSESSIONID DIDN'T CREATED~~~~~~~~~~~~REGISTR~~~~~~~~~~~~~~~~~~~~~~~~~");
-            cookie = new Cookie("JSESSIONID", req.getSession().getId());
-            cookie.setMaxAge(60*60*24);
-            cookie.setHttpOnly(true);
-            resp.addCookie(cookie);
-        }
-        String sessionGUID = cookie.getValue();
-
-        LocalDateTime now = LocalDateTime.now();
-        LocalDateTime tomorrow = now.plusDays(1);
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-        String formattedDateTime = tomorrow.format(formatter);
-
-        SessionEntity sessionEntity = new SessionEntity(sessionGUID, userId, formattedDateTime);
+        SessionEntity sessionEntity = new SessionEntity(cookie.getValue(), userId, LocalDateTime.now().plusDays(1));
 
         sessionDAO.save(sessionEntity);
 

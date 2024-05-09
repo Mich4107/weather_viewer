@@ -8,6 +8,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import ru.yuubi.weather_viewer.dao.SessionDAO;
+import ru.yuubi.weather_viewer.service.AuthService;
 
 import java.io.IOException;
 
@@ -15,19 +16,11 @@ import java.io.IOException;
 public class DeauthenticationServlet extends HttpServlet {
 
     private SessionDAO sessionDAO = new SessionDAO();
+    private AuthService authService = new AuthService();
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        Cookie[] cookies = req.getCookies();
-        String searchCookieName = "JSESSIONID";
-        for(Cookie cookie : cookies) {
-            if(cookie.getName().equals(searchCookieName)) {
-                String sessionGUIDValue = cookie.getValue();
-                cookie.setMaxAge(0);
-                resp.addCookie(cookie);
-                sessionDAO.removeSession(sessionGUIDValue);
-            }
-        }
+        authService.deleteSessionCookie(req, resp);
         resp.sendRedirect("/signin");
     }
 

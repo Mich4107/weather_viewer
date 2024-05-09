@@ -15,17 +15,20 @@ import ru.yuubi.weather_viewer.dao.SessionDAO;
 import ru.yuubi.weather_viewer.dao.UserDAO;
 import ru.yuubi.weather_viewer.entity.SessionEntity;
 import ru.yuubi.weather_viewer.entity.User;
+import ru.yuubi.weather_viewer.service.AuthService;
 import ru.yuubi.weather_viewer.utils.HibernateUtil;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.UUID;
 
 @WebServlet("/signin")
 public class AuthorizationServlet extends HttpServlet {
-    private SessionDAO sessionDAO = new SessionDAO();
     private UserDAO userDAO = new UserDAO();
+    private AuthService authService = new AuthService();
+
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -37,20 +40,12 @@ public class AuthorizationServlet extends HttpServlet {
             templateEngine.process("signin", context, resp.getWriter());
             return;
         }
-        Cookie[] cookies = req.getCookies();
-        String cookieName = "JSESSIONID";
 
-        for(Cookie c : cookies) {
-            if(c.getName().equals(cookieName)) {
-                String sessionGUID = c.getValue();
-                SessionEntity sessionEntity = sessionDAO.getSessionEntity(sessionGUID);
-                if(sessionEntity != null) {
-                    resp.sendRedirect("/home");
-                    return;
-                }
-                System.out.println("~~~~~~~~~~~~~~~~~~~~~~ In AuthorizationServlet sessionEntity is NULL ~~~~~~~~~~~~~~~~~~~~~~");
-            }
+        if(authService.isSessionCookieExists(req)) {
+            resp.sendRedirect("/home");
+            return;
         }
+
         getServletContext().getRequestDispatcher("/WEB-INF/templates/signin.html").forward(req, resp);
     }
 
@@ -68,38 +63,12 @@ public class AuthorizationServlet extends HttpServlet {
 
         int userId = user.getId();
 
-        Cookie[] cookies = req.getCookies();
-        String searchCookieName = "JSESSIONID";
-        Cookie jsessionidCookie = null;
+        Cookie cookie = new Cookie("sessionId", UUID.randomUUID().toString());
+        cookie.setMaxAge(60*60*24);
+        resp.addCookie(cookie);
 
-        for(Cookie c : cookies) {
-            if(c.getName().equals(searchCookieName)) {
-                jsessionidCookie = c;
-                break;
-            }
-        }
-
-        if(jsessionidCookie != null) {
-            jsessionidCookie.setMaxAge(60*60*24);
-            jsessionidCookie.setHttpOnly(true);
-        } else {
-            System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~JSESSIONID IS NULL~~~~~~~~~~~~~~~AUTHO~~~~~~~~~~~~~~~~~~~~~~");
-            jsessionidCookie = new Cookie("JSESSIONID", req.getSession().getId());
-            jsessionidCookie.setMaxAge(60*60*24);
-            jsessionidCookie.setHttpOnly(true);
-            resp.addCookie(jsessionidCookie);
-        }
-
-        String sessionGUID = jsessionidCookie.getValue();
-
-        LocalDateTime now = LocalDateTime.now();
-        LocalDateTime tomorrow = now.plusDays(1);
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-        String formattedDateTime = tomorrow.format(formatter);
-
-        SessionEntity sessionEntity = new SessionEntity(sessionGUID, userId, formattedDateTime);
-
-        sessionDAO.save(sessionEntity);
+        SessionEntity sessionEntity = new SessionEntity(cookie.getValue(), userId, LocalDateTime.now().plusDays(1));
+        authService.saveSessionEntity(sessionEntity);
 
         resp.sendRedirect("/home");
     }

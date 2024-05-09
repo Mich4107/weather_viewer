@@ -2,6 +2,8 @@ package ru.yuubi.weather_viewer.entity;
 
 import jakarta.persistence.*;
 
+import java.time.LocalDateTime;
+
 @Entity
 @Table(name = "sessions")
 public class SessionEntity {
@@ -11,19 +13,20 @@ public class SessionEntity {
     private int userId;
 
     @Column(name = "ExpiresAt")
-    private String expiresAt;
+    private LocalDateTime expiresAt;
 
     @OneToOne
     @JoinColumn(name = "UserId", insertable = false, updatable = false)
     private User user;
 
-    public SessionEntity() {
-    }
 
-    public SessionEntity(String id, int userId, String expiresAt) {
+    public SessionEntity(String id, int userId, LocalDateTime expiresAt) {
         this.id = id;
         this.userId = userId;
         this.expiresAt = expiresAt;
+    }
+
+    public SessionEntity() {
     }
 
     public String getId() {
@@ -42,11 +45,19 @@ public class SessionEntity {
         this.userId = userId;
     }
 
-    public String getExpiresAt() {
+    public LocalDateTime getExpiresAt() {
         return expiresAt;
     }
 
-    public void setExpiresAt(String expiresAt) {
+    public void setExpiresAt(LocalDateTime expiresAt) {
         this.expiresAt = expiresAt;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }
