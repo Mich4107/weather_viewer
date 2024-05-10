@@ -7,6 +7,8 @@ import ru.yuubi.weather_viewer.entity.SessionEntity;
 import ru.yuubi.weather_viewer.utils.HibernateUtil;
 
 public class SessionDAO {
+
+
     private SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
 
     public void removeSession(String GUID) {
@@ -34,6 +36,7 @@ public class SessionDAO {
         }
         return sessionEntity;
     }
+
     public void save(SessionEntity sessionEntity) {
         Session session = sessionFactory.getCurrentSession();
         try(session) {
@@ -42,7 +45,6 @@ public class SessionDAO {
             session.getTransaction().commit();
         }
     }
-
     public void update(SessionEntity sessionEntity) {
         Session session = sessionFactory.getCurrentSession();
         try(session) {
@@ -50,5 +52,12 @@ public class SessionDAO {
             session.merge(sessionEntity);
             session.getTransaction().commit();
         }
+    }
+
+    public SessionDAO() {
+    }
+
+    public SessionDAO(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
     }
 }

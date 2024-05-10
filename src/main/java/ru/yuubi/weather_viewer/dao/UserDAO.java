@@ -7,7 +7,7 @@ import ru.yuubi.weather_viewer.entity.User;
 import ru.yuubi.weather_viewer.utils.HibernateUtil;
 
 public class UserDAO {
-    private SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
+    private SessionFactory sessionFactory;
 
     public User getUserById(int id) {
         User user;
@@ -38,5 +38,13 @@ public class UserDAO {
             session.persist(user);
             session.getTransaction().commit();
         }
+    }
+
+    public UserDAO() {
+        this.sessionFactory = HibernateUtil.getSessionFactory();
+    }
+
+    public UserDAO(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
     }
 }

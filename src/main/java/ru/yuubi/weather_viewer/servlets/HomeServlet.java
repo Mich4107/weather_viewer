@@ -17,16 +17,12 @@ import ru.yuubi.weather_viewer.service.AuthService;
 import java.io.IOException;
 
 @WebServlet("/home")
-public class HomeServlet extends HttpServlet {
-    private AuthService authService = new AuthService();
+public class HomeServlet extends BaseServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        TemplateEngine templateEngine = (TemplateEngine) getServletContext().getAttribute("templateEngine");
-        IWebExchange webExchange = JakartaServletWebApplication.buildApplication(getServletContext()).buildExchange(req, resp);
-        WebContext context = new WebContext(webExchange);
-
-
-        SessionEntity sessionEntity = (SessionEntity) req.getSession().getAttribute("sessionEntity");
+        HttpSession httpSession = req.getSession();
+        SessionEntity sessionEntity = (SessionEntity) httpSession.getAttribute("sessionEntity");
+        httpSession.removeAttribute("sessionEntity");
         String login = authService.getUserLoginFromSessionEntity(sessionEntity);
 
         context.setVariable("userLogin", login);

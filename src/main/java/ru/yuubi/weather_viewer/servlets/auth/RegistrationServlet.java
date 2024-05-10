@@ -1,5 +1,6 @@
 package ru.yuubi.weather_viewer.servlets.auth;
 
+import com.fasterxml.jackson.databind.ser.Serializers;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.*;
@@ -12,6 +13,7 @@ import ru.yuubi.weather_viewer.dao.UserDAO;
 import ru.yuubi.weather_viewer.entity.SessionEntity;
 import ru.yuubi.weather_viewer.entity.User;
 import ru.yuubi.weather_viewer.service.AuthService;
+import ru.yuubi.weather_viewer.servlets.BaseServlet;
 import ru.yuubi.weather_viewer.utils.HibernateUtil;
 import ru.yuubi.weather_viewer.utils.PasswordEncryptorUtil;
 
@@ -20,23 +22,14 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 @WebServlet("/signup")
-public class RegistrationServlet extends HttpServlet {
-    private AuthService authService = new AuthService();
+public class RegistrationServlet extends BaseServlet {
 
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
-//        if(authService.isSessionCookieExists(req)) {
-//            resp.sendRedirect("/home");
-//            return;
-//        }
         getServletContext().getRequestDispatcher("/WEB-INF/templates/signup.html").forward(req, resp);
     }
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         String login = req.getParameter("login");
         String password = req.getParameter("password");
-
-        TemplateEngine templateEngine = (TemplateEngine) getServletContext().getAttribute("templateEngine");
-        IWebExchange webExchange = JakartaServletWebApplication.buildApplication(getServletContext()).buildExchange(req, resp);
-        WebContext context = new WebContext(webExchange);
 
         User user = new User(login, password);
         if(authService.getUserByLogin(login) != null) {

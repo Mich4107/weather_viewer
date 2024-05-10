@@ -10,20 +10,17 @@ import org.thymeleaf.web.servlet.JakartaServletWebApplication;
 import ru.yuubi.weather_viewer.entity.SessionEntity;
 import ru.yuubi.weather_viewer.entity.User;
 import ru.yuubi.weather_viewer.service.AuthService;
+import ru.yuubi.weather_viewer.servlets.BaseServlet;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
 @WebServlet("/signin")
-public class AuthenticationServlet extends HttpServlet {
-    private AuthService authService = new AuthService();
+public class AuthenticationServlet extends BaseServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         if(req.getParameter("status") != null) {
-            TemplateEngine templateEngine = (TemplateEngine) getServletContext().getAttribute("templateEngine");
-            IWebExchange webExchange = JakartaServletWebApplication.buildApplication(getServletContext()).buildExchange(req, resp);
-            WebContext context = new WebContext(webExchange);
             context.setVariable("userIsNotValid", "wrong login / password");
             templateEngine.process("signin", context, resp.getWriter());
             return;
