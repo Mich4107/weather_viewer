@@ -16,8 +16,7 @@ import java.io.IOException;
 @WebServlet("/logout")
 public class DeauthenticationServlet extends BaseServlet {
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        authService.deleteSessionCookie(req, resp);
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         resp.sendRedirect("/signin");
     }
 
