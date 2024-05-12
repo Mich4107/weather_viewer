@@ -16,14 +16,13 @@ import ru.yuubi.weather_viewer.service.AuthService;
 import java.io.IOException;
 
 public class BaseServlet extends HttpServlet {
-    protected AuthService authService;
+    protected AuthService authService = new AuthService();
     protected TemplateEngine templateEngine;
     protected IWebExchange webExchange;
     protected WebContext context;
 
     @Override
     public void init(ServletConfig config) throws ServletException {
-        authService = new AuthService();
         super.init(config);
     }
 
