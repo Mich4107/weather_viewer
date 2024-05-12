@@ -1,8 +1,5 @@
 package ru.yuubi.weather_viewer.service;
 
-import jakarta.servlet.http.Cookie;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 import org.hibernate.SessionFactory;
 import ru.yuubi.weather_viewer.dao.SessionDAO;
 import ru.yuubi.weather_viewer.dao.UserDAO;
@@ -37,11 +34,6 @@ public class AuthService {
         return userDAO.getUserByLogin(login);
     }
 
-
-    public SessionEntity getSessionEntityByGUID(String GUID) {
-        return sessionDAO.getSessionEntity(GUID);
-    }
-
     public void saveSessionEntity(SessionEntity sessionEntity) {
         sessionDAO.save(sessionEntity);
     }
@@ -52,32 +44,11 @@ public class AuthService {
         return user.getLogin();
     }
 
-
-    public void deleteSessionCookie(HttpServletRequest req, HttpServletResponse resp){
-        Cookie[] cookies = req.getCookies();
-        String searchCookieName = "sessionId";
-        for(Cookie cookie : cookies) {
-            if(cookie.getName().equals(searchCookieName)) {
-                String sessionGUIDValue = cookie.getValue();
-                cookie.setMaxAge(0);
-                resp.addCookie(cookie);
-                sessionDAO.removeSession(sessionGUIDValue);
-            }
-        }
-    }
-
-
-    /**
-     * If empty parameter -> creating DAO's with default session factory
-     */
     public AuthService() {
         this.userDAO = new UserDAO();
         this.sessionDAO = new SessionDAO();
     }
 
-    /**
-     * If it takes parameter -> creating DAO's with custom session factory (made for tests)
-     */
     public AuthService(SessionFactory sessionFactory){
         this.userDAO = new UserDAO(sessionFactory);
         this.sessionDAO = new SessionDAO(sessionFactory);
