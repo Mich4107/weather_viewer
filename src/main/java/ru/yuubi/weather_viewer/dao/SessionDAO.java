@@ -6,6 +6,8 @@ import org.hibernate.SessionFactory;
 import ru.yuubi.weather_viewer.entity.SessionEntity;
 import ru.yuubi.weather_viewer.utils.HibernateUtil;
 
+import java.time.LocalDateTime;
+
 public class SessionDAO {
 
 
@@ -20,6 +22,21 @@ public class SessionDAO {
             String hql = "delete from SessionEntity where id = :GUID";
             Query query = session.createQuery(hql);
             query.setParameter("GUID", GUID);
+            query.executeUpdate();
+
+            session.getTransaction().commit();
+        }
+    }
+
+    public void removeExpiredSessions(){
+        Session session = sessionFactory.getCurrentSession();
+        try(session) {
+            session.beginTransaction();
+
+            LocalDateTime localDateTime = LocalDateTime.now();
+            String hql = "delete from SessionEntity where expiresAt < :localDateTime";
+            Query query = session.createQuery(hql);
+            query.setParameter("localDateTime", localDateTime);
             query.executeUpdate();
 
             session.getTransaction().commit();
