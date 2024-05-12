@@ -15,8 +15,6 @@ public class ThymeleafListener implements ServletContextListener {
     private ITemplateEngine templateEngine;
     private JakartaServletWebApplication application;
 
-    //добавление атрибута template engine в контекст servlet (контейнер servlet'ов), откуда
-    //его могут взять любые servlet'ы
     @Override
     public void contextInitialized(ServletContextEvent sce) {
         this.application = JakartaServletWebApplication.buildApplication(sce.getServletContext());
