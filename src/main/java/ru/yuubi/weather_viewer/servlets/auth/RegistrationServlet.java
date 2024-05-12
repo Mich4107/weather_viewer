@@ -1,21 +1,11 @@
 package ru.yuubi.weather_viewer.servlets.auth;
 
-import com.fasterxml.jackson.databind.ser.Serializers;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.*;
-import org.thymeleaf.TemplateEngine;
-import org.thymeleaf.context.WebContext;
-import org.thymeleaf.web.IWebExchange;
-import org.thymeleaf.web.servlet.JakartaServletWebApplication;
-import ru.yuubi.weather_viewer.dao.SessionDAO;
-import ru.yuubi.weather_viewer.dao.UserDAO;
 import ru.yuubi.weather_viewer.entity.SessionEntity;
 import ru.yuubi.weather_viewer.entity.User;
-import ru.yuubi.weather_viewer.service.AuthService;
 import ru.yuubi.weather_viewer.servlets.BaseServlet;
-import ru.yuubi.weather_viewer.utils.HibernateUtil;
-import ru.yuubi.weather_viewer.utils.PasswordEncryptorUtil;
 
 import java.io.IOException;
 import java.time.LocalDateTime;

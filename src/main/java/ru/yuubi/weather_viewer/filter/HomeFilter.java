@@ -27,11 +27,6 @@ public class HomeFilter implements Filter {
         for(Cookie c : cookies) {
             if(c.getName().equals(searchCookieName)) {
                 String sessionGUID = c.getValue();
-
-                System.out.println();
-                System.out.println("~~~~~~~~~~~~IN /home FILTER~~~~~~~~~~~~~~~~");
-                System.out.println();
-
                 SessionEntity sessionEntity = sessionDAO.getSessionEntity(sessionGUID);
 
                 if(sessionEntity != null) {

@@ -26,13 +26,7 @@ public class AuthFilter implements Filter {
         for(Cookie c : cookies) {
             if(c.getName().equals(searchCookieName)) {
                 String sessionGUID = c.getValue();
-
-                System.out.println();
-                System.out.println("~~~~~~~~~~~~IN /sign(in/up) FILTER~~~~~~~~~~~~~~~~");
-                System.out.println();
-
                 SessionEntity sessionEntity = sessionDAO.getSessionEntity(sessionGUID);
-
                 if(sessionEntity != null) {
                     resp.sendRedirect("/home");
                     return;
@@ -42,4 +36,5 @@ public class AuthFilter implements Filter {
 
         filterChain.doFilter(servletRequest, servletResponse);
     }
+
 }
