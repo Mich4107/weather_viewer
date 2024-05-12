@@ -5,21 +5,22 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import ru.yuubi.weather_viewer.dto.WeatherDTO;
 import ru.yuubi.weather_viewer.dto.LocationDTO;
-import ru.yuubi.weather_viewer.exception.WeatherAPIException;
+import ru.yuubi.weather_viewer.exception.WeatherApiException;
 import ru.yuubi.weather_viewer.utils.ConfigReaderUtil;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
 import java.util.ArrayList;
 import java.util.List;
 
-public class WeatherAPIService {
+public class WeatherApiService {
     private static final String API_KEY = ConfigReaderUtil.getApiKey();
     private static final String WEATHER_URL = "https://api.openweathermap.org/data/2.5/weather";
     private static final String LOCATIONS_URL = "http://api.openweathermap.org/geo/1.0/direct";
+    private HttpClient client;
 
     public WeatherDTO getWeatherByCoordinates(double lat, double lon){
         String requestUrl = WEATHER_URL +"?lat="+lat+"&lon="+lon+"&appid="+ API_KEY +"&units=metric";
@@ -40,24 +41,25 @@ public class WeatherAPIService {
             throw new RuntimeException(e);
         }
     }
-    public List<LocationDTO> getLocationsFromJson(String jsonResponse) throws JsonProcessingException {
-        ObjectMapper objectMapper = new ObjectMapper();
-        JsonNode rootNode = objectMapper.readTree(jsonResponse);
-        List<LocationDTO> locations = new ArrayList<>();
-        for (int i = 0; i < rootNode.size(); i++) {
-            String name = rootNode.get(i).get("name").asText();
-            double lat = rootNode.get(i).get("lat").asDouble();
-            double lon = rootNode.get(i).get("lon").asDouble();
-            String countryCode = rootNode.get(i).get("country").asText();
-            String state = rootNode.get(i).get("state").asText();
+    private String getResponse(String requestUrl) throws IOException {
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(requestUrl))
+                .build();
 
-            LocationDTO locationDTO = new LocationDTO(name, lat, lon, countryCode, state);
-            locations.add(locationDTO);
+        HttpResponse<String> response;
+        try {
+            response = client.send(request, HttpResponse.BodyHandlers.ofString());
+        } catch (IOException | InterruptedException e) {
+            throw new RuntimeException(e);
         }
-        return locations;
+        if(response.statusCode() == 200) {
+            return response.body();
+        } else {
+            throw new WeatherApiException("Something went wrong in the request to the API");
+        }
     }
 
-    public WeatherDTO getWeatherFromJson(String jsonResponse) throws JsonProcessingException {
+    private WeatherDTO getWeatherFromJson(String jsonResponse) throws JsonProcessingException {
         ObjectMapper objectMapper = new ObjectMapper();
         JsonNode rootNode = objectMapper.readTree(jsonResponse);
 
@@ -75,27 +77,28 @@ public class WeatherAPIService {
         return new WeatherDTO(longitude, latitude, description, roundedTemp, roundedTempFeelsLike, locationName, countryCode, iconId);
     }
 
-    private String getResponse(String requestUrl) throws IOException {
-        URL obj = new URL(requestUrl);
-        HttpURLConnection connection = (HttpURLConnection) obj.openConnection();
+    private List<LocationDTO> getLocationsFromJson(String jsonResponse) throws JsonProcessingException {
+        ObjectMapper objectMapper = new ObjectMapper();
+        JsonNode rootNode = objectMapper.readTree(jsonResponse);
+        List<LocationDTO> locations = new ArrayList<>();
+        for (int i = 0; i < rootNode.size(); i++) {
+            String name = rootNode.get(i).get("name").asText();
+            double lat = rootNode.get(i).get("lat").asDouble();
+            double lon = rootNode.get(i).get("lon").asDouble();
+            String countryCode = rootNode.get(i).get("country").asText();
+            String state = rootNode.get(i).get("state").asText();
 
-        int responseCode = connection.getResponseCode();
-
-        if(responseCode == HttpURLConnection.HTTP_OK) {
-            InputStreamReader inputStreamReader = new InputStreamReader(connection.getInputStream());
-            BufferedReader reader = new BufferedReader(inputStreamReader);
-            StringBuilder response = new StringBuilder();
-
-            String inputLine;
-
-            while ((inputLine = reader.readLine()) != null) {
-                response.append(inputLine);
-            }
-            reader.close();
-
-            return response.toString();
-        } else {
-            throw new WeatherAPIException("Something went wrong in the request to the API");
+            LocationDTO locationDTO = new LocationDTO(name, lat, lon, countryCode, state);
+            locations.add(locationDTO);
         }
+        return locations;
+    }
+
+    public WeatherApiService() {
+        this.client = HttpClient.newHttpClient();
+    }
+
+    public WeatherApiService(HttpClient client) {
+        this.client = client;
     }
 }
