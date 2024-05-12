@@ -1,4 +1,4 @@
-package ru.yuubi.weather_viewer.dao.config;
+package config;
 
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
@@ -30,16 +30,19 @@ public class HibernateUtil {
                 settings.put(Environment.SHOW_SQL, "true");
                 settings.put(Environment.CURRENT_SESSION_CONTEXT_CLASS, "thread");
 
+                settings.put(Environment.HBM2DDL_AUTO, "update");
+
                 configuration.setProperties(settings);
 
                 configuration.addAnnotatedClass(User.class);
                 configuration.addAnnotatedClass(Location.class);
                 configuration.addAnnotatedClass(SessionEntity.class);
 
+
                 ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder()
                         .applySettings(configuration.getProperties()).build();
 
-                System.out.println("Hibernate Java Config serviceRegistry created");
+                System.out.println("~~~H2DB config~~~");
                 sessionFactory = configuration.buildSessionFactory(serviceRegistry);
 
                 return sessionFactory;
