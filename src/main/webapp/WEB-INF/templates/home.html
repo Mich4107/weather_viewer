@@ -3,12 +3,47 @@
 <head>
     <meta charset="UTF-8">
     <title>Home</title>
+    <link rel="stylesheet" href="../../static/css/my.css">
+
 </head>
 <body>
-<p th:text="'Hello dear '+${userLogin}+', you was automatically redirect here'"></p>
+<header>
+    <div class="company-logo-name">
+        <img src="../../static/img/6793083-84.png" height="64" width="64"/>
+        <span class="company-name">Weather Viewer</span>
+    </div>
 
-<form action="/logout" method="post">
-    <button type="submit">logout</button>
-</form>
+    <div>
+        <form class="locations-search">
+            <input type="text" name="city_name" placeholder="Search...">
+            <button type="submit">
+                <img src="../../static/img/search.png"
+                     height="25"
+                     width="25" /></button>
+        </form>
+    </div>
+
+    <div class="user">
+        <p th:text="${userLogin}">Yuubi</p>
+        <form action="/logout" method="post" class="logout-button">
+            <button type="submit">logout</button>
+        </form>
+    </div>
+</header>
+
+
+<div class="location-weather-block">
+    <div class="weather-info">
+        <span>Hello weather</span>
+
+        <form>
+            <button type="submit">
+                <img src="../../static/img/trashcan.png"
+                     height="25"
+                     width="25" /></button>
+        </form>
+    </div>
+</div>
+
 </body>
 </html>
