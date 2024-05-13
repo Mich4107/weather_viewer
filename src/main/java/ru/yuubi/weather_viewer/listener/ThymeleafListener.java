@@ -32,7 +32,7 @@ public class ThymeleafListener implements ServletContextListener {
     private WebApplicationTemplateResolver buildTemplateResolver(IWebApplication application) {
         WebApplicationTemplateResolver templateResolver = new WebApplicationTemplateResolver(application);
         templateResolver.setTemplateMode(TemplateMode.HTML);
-        templateResolver.setPrefix("/WEB-INF/templates/");
+        templateResolver.setPrefix("/templates/");
         templateResolver.setSuffix(".html");
         templateResolver.setCacheTTLMs(Long.valueOf(3600000L));
         templateResolver.setCacheable(true);

@@ -15,7 +15,7 @@ import java.util.UUID;
 public class RegistrationServlet extends BaseServlet {
 
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
-        getServletContext().getRequestDispatcher("/WEB-INF/templates/signup.html").forward(req, resp);
+        getServletContext().getRequestDispatcher("/templates/signup.html").forward(req, resp);
     }
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         String login = req.getParameter("login");

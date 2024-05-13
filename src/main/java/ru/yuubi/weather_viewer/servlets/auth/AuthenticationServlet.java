@@ -26,7 +26,7 @@ public class AuthenticationServlet extends BaseServlet {
             return;
         }
 
-        getServletContext().getRequestDispatcher("/WEB-INF/templates/signin.html").forward(req, resp);
+        getServletContext().getRequestDispatcher("/templates/signin.html").forward(req, resp);
     }
 
     @Override
