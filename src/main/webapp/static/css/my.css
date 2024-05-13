@@ -1,0 +1,266 @@
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap');
+*
+{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Quicksand', sans-serif;
+}
+
+body{
+    background-color: #151719;
+    color: white;
+}
+
+h4  {
+    display: flex;
+    justify-content: center;
+    color: dodgerblue;
+    text-transform: uppercase;
+}
+
+
+.center-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.center-block {
+    background-color: #222222;
+    padding-right: 20px;
+    padding-left: 20px;
+    padding-top: 25px;
+    padding-bottom: 25px;
+    border-radius: 4px;
+
+}
+.form-control {
+    background-color: #121212;
+    border-color: #2F3032;
+    width: 100%;
+}
+
+
+.btn-primary {
+    margin-left: 15px;
+    width: 160px;
+}
+.sign-up-href {
+    margin-left: 60px;
+}
+.wrong-data {
+    color: orangered;
+    font-size: 6px;
+}
+
+
+header {
+    background-color: #2F3032;
+    overflow: hidden;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 80px;
+    padding-left: 200px;
+    padding-right: 200px;
+}
+
+.company-logo-name {
+    display: flex;
+    align-items: center;
+}
+
+.company-name {
+    color: white;
+    font-family: "Arial Rounded MT Bold", sans-serif;
+    font-weight: bold;
+    display: block;
+    margin-top: 20px;
+    margin-left: 5px;
+    font-size: 26px;
+}
+
+.company-logo-name img {
+    filter: invert(100%) sepia(100%) saturate(0%) hue-rotate(240deg) brightness(1000%);
+}
+
+.user {
+    display: flex;
+    align-items: center;
+}
+
+.user p {
+    margin-right: 20px;
+    font-size: 24px;
+}
+
+.logout-button button {
+    background-color: transparent;
+    border: none;
+    color: white;
+    cursor: pointer;
+
+}
+
+.logout-button button {
+    background-color: transparent;
+    border: 1px solid white;
+    color: white;
+    cursor: pointer;
+    border-radius: 12px;
+    margin-right: 7px;
+    padding: 5px 10px;
+}
+
+.logout-button button:hover {
+    background-color: #0a0a0a;
+}
+
+
+.locations-search {
+    margin-top: 30px;
+    display: flex;
+    margin-right: 5%;
+}
+
+.locations-search input[type="text"]{
+    width: 300px;
+    height: 40px;
+    padding: 10px;
+    margin-bottom: 20px;
+    box-sizing: border-box;
+    border-radius: 4px;
+    background-color: transparent;
+    color: white;
+
+    border: 1px solid white;
+    min-width: 0
+}
+
+.locations-search button[type="submit"]{
+    width: 15%;
+    padding: 7px;
+    margin-bottom: 20px;
+    box-sizing: border-box;
+    border: none;
+    border-radius: 25px;
+    background-color: transparent;
+    color: white;
+}
+.locations-search button[type="submit"]:hover{
+    background-color: #4d4d4d;
+}
+.locations-search img {
+    filter: invert(100%) sepia(100%) saturate(0%) hue-rotate(240deg) brightness(1000%);
+}
+
+.weathers {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 45vh;
+    margin: 0;
+    padding: 0;
+}
+
+.weathers text {
+    padding: 20px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    text-align: center;
+    max-width: 80%;
+}
+.text p {
+    font-size: 22px;
+    padding: 7px;
+}
+
+.location-weather-block {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 22vh;
+    margin-top: 2%;
+    padding: 0;
+    border-radius: 12px;
+}
+
+.weather-info span {
+    font-size: 22px;
+    padding: 7px;
+}
+
+.weather-info {
+    position: relative;
+    width: 40%;
+    height: 80%;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 20px;
+    text-align: center;
+    max-width: 80%;
+}
+
+.location-weather-block button[type="submit"] {
+    /*position: relative;*/
+    position: absolute;
+    bottom: -17px;
+    right: 3px;
+
+    padding: 1px;
+    margin-bottom: 20px;
+    box-sizing: border-box;
+    border: none;
+    border-radius: 500px;
+    background-color: transparent;
+    color: white;
+}
+
+.location-weather-block button[type="submit"]:hover {
+    background-color: #4d4d4d;
+}
+
+
+
+@media screen and (max-width: 2000px){
+    .form-control {
+        width: 270px;
+    }
+}
+
+@media screen and (max-width:1200px) {
+    .weather-info {
+        width: 475px;
+    }
+    header {
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+
+}
+
+
+@media screen and (max-width: 700px) {
+
+    .text p {
+        margin-left: 15px;
+    }
+    header {
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+    .locations-search input[type="text"] {
+        width: 60%;
+        margin-left: 5px;
+    }
+    .locations-search button[type="submit"] {
+        width: 30%;
+    }
+}
+
+
+
