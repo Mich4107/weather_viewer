@@ -1,18 +1,16 @@
-package ru.yuubi.weather_viewer.dao;
-
+import config.HibernateUtil;
 import org.junit.jupiter.api.Test;
-import ru.yuubi.weather_viewer.dao.config.HibernateUtil;
 import ru.yuubi.weather_viewer.entity.User;
 import ru.yuubi.weather_viewer.service.AuthService;
 
-import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class AuthServiceTest {
 
     private AuthService authService = new AuthService(HibernateUtil.getSessionFactory());
 
     @Test
-    void itShouldGetUserByLogin() {
+    void shouldGetUserByLogin() {
         User user1 = new User("123", "456");
         authService.saveUser(user1);
 
@@ -21,6 +19,6 @@ class AuthServiceTest {
         String user1Login = user1.getLogin();
         String user2Login = user2.getLogin();
 
-        assertThat(user1Login).isEqualTo(user2Login);
+        assertEquals(user1Login, user2Login);
     }
 }
