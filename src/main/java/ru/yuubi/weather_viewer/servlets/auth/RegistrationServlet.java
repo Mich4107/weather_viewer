@@ -33,7 +33,7 @@ public class RegistrationServlet extends BaseServlet {
         int userId = user.getId();
 
         Cookie cookie = new Cookie("sessionId", UUID.randomUUID().toString());
-        cookie.setMaxAge(60*10);
+        cookie.setMaxAge(60*60*24);
         resp.addCookie(cookie);
 
         SessionEntity sessionEntity = new SessionEntity(cookie.getValue(), userId, LocalDateTime.now().plusSeconds(60*10));

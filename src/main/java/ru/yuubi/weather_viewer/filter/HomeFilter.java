@@ -30,7 +30,7 @@ public class HomeFilter implements Filter {
                 SessionEntity sessionEntity = sessionDAO.getSessionEntity(sessionGUID);
 
                 if(sessionEntity != null) {
-                    c.setMaxAge(60*10);
+                    c.setMaxAge(60*60*24);
                     resp.addCookie(c);
 
                     sessionEntity.setExpiresAt(LocalDateTime.now().plusSeconds(60*10));
