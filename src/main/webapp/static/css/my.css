@@ -123,7 +123,7 @@ header {
 .locations-search {
     margin-top: 30px;
     display: flex;
-    margin-right: 5%;
+    margin-right: 9%;
 }
 
 .locations-search input[type="text"]{
@@ -189,11 +189,6 @@ header {
     border-radius: 12px;
 }
 
-.weather-info span {
-    font-size: 22px;
-    padding: 7px;
-}
-
 .weather-info {
     position: relative;
     width: 40%;
@@ -203,6 +198,61 @@ header {
     border-radius: 20px;
     text-align: center;
     max-width: 80%;
+}
+
+.weather-info span {
+    font-size: 22px;
+    padding: 7px;
+}
+
+.location-block {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 8vh;
+    margin: 50px auto;
+    padding: 0;
+}
+
+.location-info {
+    width: 400px;
+    height: 30%;
+    padding: 20px;
+    max-width: 80%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+
+    font-size: 22px;
+}
+
+/*.text-class {*/
+/*    display: flex;*/
+/*    align-items: center;*/
+/*    justify-content: center;*/
+/*    text-align: center;*/
+/*    */
+/*}*/
+
+.central-line {
+    width: 350px;
+    border-bottom: 1px solid white;
+    margin: 0 auto;
+}
+
+.location-info button {
+    margin-left: 15px;
+    border: none;
+    background-color: transparent;
+
+    box-sizing: border-box;
+    padding: 5px;
+    border-radius: 10px;
+    color: white;
+}
+.location-info button[type="submit"]:hover {
+    background-color: #4d4d4d;
 }
 
 .location-weather-block button[type="submit"] {
