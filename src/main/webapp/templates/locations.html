@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Weather Viewer</title>
+    <link rel="stylesheet" href="../static/css/my.css">
+
+</head>
+<body>
+<header>
+    <div class="company-logo-name">
+        <img src="../static/img/6793083-84.png" height="64" width="64"/>
+        <span class="company-name">Weather Viewer</span>
+    </div>
+
+    <form th:action="@{/locations}" method="get" class="locations-search">
+        <input type="text" name="city_name" placeholder="Search...">
+        <button type="submit">
+            <img src="../static/img/search.png"
+                 height="25"
+                 width="25" /></button>
+    </form>
+
+    <div class="user">
+        <p th:text="${userLogin}"></p>
+        <form action="/logout" method="post" class="logout-button">
+            <button type="submit">logout</button>
+        </form>
+    </div>
+</header>
+
+<div th:each="location : ${locations}">
+    <div class="location-block">
+        <div class="location-info">
+            <div th:if="${location.getName() == location.getState()}">
+                <span class="text-class" th:text="${location.getName() + ', ' + location.getCountry()}"></span>
+            </div>
+            <div th:if="${location.getName() != location.getState()}">
+                <span th:text="${location.getName() +', '+ location.getState() +', '+ location.getCountry()}"></span>
+            </div>
+            <form th:action="@{/locations}" method="post">
+                <button type="submit">
+                    <img src="../static/img/checkmark.png"
+                         height="25"
+                         width="25" /></button>
+            </form>
+            <div class="central-line">
+
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
