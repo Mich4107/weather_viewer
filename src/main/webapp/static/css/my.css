@@ -221,28 +221,32 @@ header {
     max-width: 80%;
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: space-between;
     text-align: center;
 
     font-size: 22px;
 }
 
-/*.text-class {*/
-/*    display: flex;*/
-/*    align-items: center;*/
-/*    justify-content: center;*/
-/*    text-align: center;*/
-/*    */
-/*}*/
+.div1 {
+    position: relative;
+    display: flex;
+    margin-bottom: 55px;
+}
 
 .central-line {
+    position: absolute;
+    /*~~~~~~~~*/
     width: 350px;
     border-bottom: 1px solid white;
     margin: 0 auto;
 }
 
 .location-info button {
-    margin-left: 15px;
+    position: relative;
+    display: flex;
+    margin-bottom: 50px;
+
+
     border: none;
     background-color: transparent;
 
@@ -274,6 +278,77 @@ header {
     background-color: #4d4d4d;
 }
 
+
+.footer {
+    background-color: #151719;
+    padding: 20px 0;
+    text-align: center;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    color: #4d4d4d;
+}
+.footer-separator {
+    border: none;
+    border-top: 1px solid #4d4d4d;
+    margin: 10px 0;
+    margin-left: 30%;
+    margin-right: 30%;
+}
+
+
+.footer p {
+    margin: 0;
+}
+
+.footer ul {
+    list-style: none;
+    padding: 0;
+}
+
+.footer ul li {
+    display: inline;
+    margin-right: 10px;
+}
+
+.footer ul li:last-child {
+    margin-right: 0;
+}
+
+.footer ul li a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+.footer ul li a:hover {
+    text-decoration: underline;
+}
+/*footer{*/
+/*    display: flex;*/
+/*    flex-direction: column;*/
+/*    align-items: center;*/
+/*    height: 8vh;*/
+/*}*/
+
+/*.footer-block {*/
+/*    width: 800px;*/
+/*    height: 30%;*/
+/*    max-width: 80%;*/
+/*    display: flex;*/
+/*    align-items: center;*/
+/*    text-align: center;*/
+
+/*    font-size: 22px;*/
+/*}*/
+
+/*.footer-central-line {*/
+/*    position: absolute;*/
+/*    !*~~~~~~~~*!*/
+/*    width: 100%;*/
+/*    border-bottom: 1px solid #4d4d4d;*/
+
+/*    height: 21vh;*/
+/*}*/
 
 
 @media screen and (max-width: 2000px){
