@@ -33,16 +33,16 @@
     <div class="location-block">
         <div class="location-info">
             <div th:if="${location.getName() == location.getState()}">
-                <span class="text-class" th:text="${location.getName() + ', ' + location.getCountry()}"></span>
+                <span th:text="${location.getName() + ', ' + location.getCountry()}" class="div1"></span>
             </div>
             <div th:if="${location.getName() != location.getState()}">
-                <span th:text="${location.getName() +', '+ location.getState() +', '+ location.getCountry()}"></span>
+                <span th:text="${location.getName() +', '+ location.getState() +', '+ location.getCountry()}" class="div1"></span>
             </div>
-            <form th:action="@{/locations}" method="post">
+            <form th:action="@{/locations}" method="post" >
                 <button type="submit">
                     <img src="../static/img/checkmark.png"
-                         height="25"
-                         width="25" /></button>
+                         height="35"
+                         width="35" /></button>
             </form>
             <div class="central-line">
 
@@ -50,5 +50,18 @@
         </div>
     </div>
 </div>
+
+
+<footer class="footer">
+    <div class="container">
+        <hr class="footer-separator"/>
+        <p>Made by Mich4107</p>
+    </div>
+</footer>
+<!--<footer>-->
+<!--    <div class="footer-block">-->
+<!--        <div class="footer-central-line"></div>-->
+<!--    </div>-->
+<!--</footer>-->
 </body>
 </html>
