@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Home</title>
+    <title>Weather Viewer</title>
     <link rel="stylesheet" href="../static/css/my.css">
 
 </head>
@@ -13,35 +13,60 @@
         <span class="company-name">Weather Viewer</span>
     </div>
 
-    <div>
-        <form class="locations-search">
-            <input type="text" name="city_name" placeholder="Search...">
-            <button type="submit">
-                <img src="../static/img/search.png"
-                     height="25"
-                     width="25" /></button>
-        </form>
-    </div>
+    <form th:action="@{/locations}" method="get" class="locations-search">
+        <input type="text" name="city_name" placeholder="Search...">
+        <button type="submit">
+            <img src="../static/img/search.png"
+                 height="25"
+                 width="25" /></button>
+    </form>
 
     <div class="user">
-        <p th:text="${userLogin}">Yuubi</p>
+        <p th:text="${userLogin}"></p>
         <form action="/logout" method="post" class="logout-button">
             <button type="submit">logout</button>
         </form>
     </div>
 </header>
 
+<div th:if="${userLocations.isEmpty()}">
+    <div class="weathers">
+        <div class="text">
+            <p>Weather viewing locations have not been added yet. </p>
+            <p>Search your first location ;)</p>
+        </div>
+    </div>
+</div>
 
-<div class="location-weather-block">
-    <div class="weather-info">
-        <span>Hello weather</span>
+<div th:each="location : ${userLocations}">
+    <div class="location-weather-block">
+        <div class="weather-info">
+            <span th:text="${location.getLocationInfo()}" class="city-code-info"></span>
 
-        <form>
-            <button type="submit">
-                <img src="../static/img/trashcan.png"
-                     height="25"
-                     width="25" /></button>
-        </form>
+            <span th:text="${location.getTemp()}" class="temp-info"></span>
+            <img th:src="${location.getIconUrl()}"/>
+
+            <span th:text="${location.getWeatherDescription()}" ></span>
+
+            <span th:text="${location.getTempFeelsLike()}" ></span>
+
+
+            <img src="../static/img/wind.png" width="25" height="25"/> <span th:text="${location.getWindSpeed()}" ></span>
+
+            <img src="../static/img/humidity.png" width="25" height="25"/> <span th:text="${location.getHumidity()}" ></span>
+
+            <img src="../static/img/pressure.png" width="25" height="25"/><span th:text="${location.getPressure()}" ></span>
+
+            <form th:action="@{/home}" method="post">
+
+                <input type="hidden" name="locationId" th:value="${location.getLocationId()}">
+
+                <button type="submit">
+                    <img src="../static/img/trashcan.png"
+                         height="25"
+                         width="25" /></button>
+            </form>
+        </div>
     </div>
 </div>
 
