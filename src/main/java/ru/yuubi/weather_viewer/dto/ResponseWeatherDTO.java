@@ -1,34 +1,33 @@
 package ru.yuubi.weather_viewer.dto;
 
 
-public class WeatherDTO {
-
+public class ResponseWeatherDTO {
     private double longitude;
-
     private double latitude;
-
     private String description;
-
     private int temp;
-
     private int tempFeelsLike;
-
+    private int pressure;
+    private int humidity;
+    private double windSpeed;
     private String locationName;
-
     private String countryCode;
-
     private String iconId;
 
-
-    public WeatherDTO() {
+    public ResponseWeatherDTO() {
     }
 
-    public WeatherDTO(double longitude, double latitude, String description, int temp, int tempFeelsLike, String locationName, String countryCode, String iconId) {
+    public ResponseWeatherDTO(double longitude, double latitude, String description,
+                              int temp, int tempFeelsLike, int pressure, int humidity,
+                              double windSpeed, String locationName, String countryCode, String iconId) {
         this.longitude = longitude;
         this.latitude = latitude;
         this.description = description;
         this.temp = temp;
         this.tempFeelsLike = tempFeelsLike;
+        this.pressure = pressure;
+        this.humidity = humidity;
+        this.windSpeed = windSpeed;
         this.locationName = locationName;
         this.countryCode = countryCode;
         this.iconId = iconId;
@@ -98,6 +97,29 @@ public class WeatherDTO {
         this.locationName = locationName;
     }
 
+    public int getPressure() {
+        return pressure;
+    }
+
+    public void setPressure(int pressure) {
+        this.pressure = pressure;
+    }
+
+    public int getHumidity() {
+        return humidity;
+    }
+
+    public void setHumidity(int humidity) {
+        this.humidity = humidity;
+    }
+
+    public double getWindSpeed() {
+        return windSpeed;
+    }
+
+    public void setWindSpeed(double windSpeed) {
+        this.windSpeed = windSpeed;
+    }
 
     @Override
     public String toString() {
@@ -107,6 +129,9 @@ public class WeatherDTO {
                 ", description='" + description + '\'' +
                 ", temp=" + temp +
                 ", tempFeelsLike=" + tempFeelsLike +
+                ", pressure=" + pressure +
+                ", humidity=" + humidity +
+                ", windSpeed=" + windSpeed +
                 ", locationName='" + locationName + '\'' +
                 ", countryCode='" + countryCode + '\'' +
                 '}';
