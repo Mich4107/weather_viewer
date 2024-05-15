@@ -38,41 +38,77 @@
     </div>
 </div>
 
+
 <div th:each="location : ${userLocations}">
     <div class="location-weather-block">
-        <div class="weather-info">
-            <div class="city-code-info">
-                <span th:text="${location.getLocationInfo()}" style="font-size: 18px"></span>
+        <div class="weather">
+            <p class="city-name">Moscow, RU</p>
+            <div class="da">
+                <div class="left">
+                    <p class="ne">+8</p>
+                    <img th:src="${location.getIconUrl()}" alt="облачко" width="100px" height="100px">
+                </div>
+                <div class="medium">
+                    <p class="medium-text">Cloudies<br>Feels like +7</p>
+                </div>
+                <div class="right">
+                    <p class="up"><img class="ne-one" src="../static/img/humidity.png" alt="осадки" width="25px" height=25px>2,0 m/s</p>
+                    <p class="medium-da"><img class="ne-two" src="../static/img/wind.png" alt="ветер" width="25px" height=25px>70%</p>
+                    <p class="down"><img class="ne-three" src="../static/img/pressure.png" alt="ветер" width="25px" height=25px>782</p>
+                </div>
             </div>
 
-            <div class="temp-info">
-                <span th:text="${location.getTemp()}" style="font-size: 28px"></span>
-                <img th:src="${location.getIconUrl()}" style="background: red"/>
-            </div>
-
-            <span th:text="${location.getWeatherDescription()}" ></span>
-
-            <span th:text="${location.getTempFeelsLike()}" ></span>
-
-
-            <img src="../static/img/wind.png" width="25" height="25"/> <span th:text="${location.getWindSpeed()}" ></span>
-
-            <img src="../static/img/humidity.png" width="25" height="25"/> <span th:text="${location.getHumidity()}" ></span>
-
-            <img src="../static/img/pressure.png" width="25" height="25"/><span th:text="${location.getPressure()}" ></span>
 
             <form th:action="@{/home}" method="post">
-
                 <input type="hidden" name="locationId" th:value="${location.getLocationId()}">
+                <div class="delete">
+                    <button type="submit">
+                        <img class="img-delete" src="../static/img/trashcan.png" alt="мусорка" width="22px" height=22px>
+                    </button>
+                </div>
 
-                <button type="submit">
-                    <img src="../static/img/trashcan.png"
-                         height="25"
-                         width="25" /></button>
             </form>
+
         </div>
     </div>
 </div>
+
+
+<!--<div th:each="location : ${userLocations}">-->
+<!--    <div class="location-weather-block">-->
+<!--        <div class="weather-info">-->
+<!--            <div class="city-code-info">-->
+<!--                <span th:text="${location.getLocationInfo()}" style="font-size: 18px"></span>-->
+<!--            </div>-->
+
+<!--            <div class="temp-info">-->
+<!--                <span th:text="${location.getTemp()}" style="font-size: 28px"></span>-->
+<!--                <img th:src="${location.getIconUrl()}" style="background: red"/>-->
+<!--            </div>-->
+
+<!--            <span th:text="${location.getWeatherDescription()}" ></span>-->
+
+<!--            <span th:text="${location.getTempFeelsLike()}" ></span>-->
+
+
+<!--            <img src="../static/img/wind.png" width="25" height="25"/> <span th:text="${location.getWindSpeed()}" ></span>-->
+
+<!--            <img src="../static/img/humidity.png" width="25" height="25"/> <span th:text="${location.getHumidity()}" ></span>-->
+
+<!--            <img src="../static/img/pressure.png" width="25" height="25"/><span th:text="${location.getPressure()}" ></span>-->
+
+<!--            <form th:action="@{/home}" method="post">-->
+
+<!--                <input type="hidden" name="locationId" th:value="${location.getLocationId()}">-->
+
+<!--                <button type="submit">-->
+<!--                    <img src="../static/img/trashcan.png"-->
+<!--                         height="25"-->
+<!--                         width="25" /></button>-->
+<!--            </form>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</div>-->
 
 </body>
 </html>
