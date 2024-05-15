@@ -19,6 +19,9 @@ h4  {
     text-transform: uppercase;
 }
 
+.header-url {
+    text-decoration: none;
+}
 
 .center-container {
     display: flex;
