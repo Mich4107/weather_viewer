@@ -4,14 +4,15 @@
     <meta charset="UTF-8">
     <title>Weather Viewer</title>
     <link rel="stylesheet" href="../static/css/my.css">
-
 </head>
 <body>
 <header>
-    <div class="company-logo-name">
-        <img src="../static/img/6793083-84.png" height="64" width="64"/>
-        <span class="company-name">Weather Viewer</span>
-    </div>
+    <a href="/home" class="header-url">
+        <div class="company-logo-name">
+            <img src="../static/img/6793083-84.png" height="64" width="64"/>
+            <span class="company-name">Weather Viewer</span>
+        </div>
+    </a>
 
     <form th:action="@{/locations}" method="get" class="locations-search">
         <input type="text" name="city_name" placeholder="Search...">
@@ -29,6 +30,15 @@
     </div>
 </header>
 
+<div th:if="${locations.isEmpty()}">
+    <div class="weathers">
+        <div class="text">
+            <p>No locations were found for your request :(</p>
+            <p>Try to find another city </p>
+        </div>
+    </div>
+</div>
+
 <div th:each="location : ${locations}">
     <div class="location-block">
         <div class="location-info">
@@ -38,7 +48,11 @@
             <div th:if="${location.getName() != location.getState()}">
                 <span th:text="${location.getName() +', '+ location.getState() +', '+ location.getCountry()}" class="div1"></span>
             </div>
-            <form th:action="@{/locations}" method="post" >
+            <form th:action="@{/locations}" method="post">
+                <input type="hidden" name="lat" th:value="${location.getLatitude()}">
+                <input type="hidden" name="lon" th:value="${location.getLongitude()}">
+                <input type="hidden" name="user" th:value="${userLogin}">
+
                 <button type="submit">
                     <img src="../static/img/checkmark.png"
                          height="35"
