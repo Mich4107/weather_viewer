@@ -12,7 +12,7 @@ import ru.yuubi.weather_viewer.entity.SessionEntity;
 import java.io.IOException;
 import java.time.LocalDateTime;
 
-@WebFilter("/home")
+@WebFilter({"/home","/locations"})
 public class HomeFilter implements Filter {
     private SessionDAO sessionDAO = new SessionDAO();
 
@@ -33,7 +33,7 @@ public class HomeFilter implements Filter {
                     c.setMaxAge(60*60*24);
                     resp.addCookie(c);
 
-                    sessionEntity.setExpiresAt(LocalDateTime.now().plusSeconds(60*10));
+                    sessionEntity.setExpiresAt(LocalDateTime.now().plusSeconds(60*60*24));
                     sessionDAO.update(sessionEntity);
 
                     HttpSession httpSession = req.getSession();
