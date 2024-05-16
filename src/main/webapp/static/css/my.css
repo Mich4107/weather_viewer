@@ -101,22 +101,15 @@ header {
 }
 
 .logout-button button {
-    background-color: transparent;
-    border: none;
     color: white;
-    cursor: pointer;
-
-}
-
-.logout-button button {
     background-color: transparent;
     border: 1px solid white;
-    color: white;
     cursor: pointer;
     border-radius: 12px;
     margin-right: 7px;
     padding: 5px 10px;
 }
+
 
 .logout-button button:hover {
     background-color: #0a0a0a;
@@ -138,6 +131,7 @@ header {
     border-radius: 4px;
     background-color: transparent;
     color: white;
+
 
     border: 1px solid white;
     min-width: 0
@@ -177,6 +171,23 @@ header {
     text-align: center;
     max-width: 80%;
 }
+
+.weathers-da{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: orangered;
+    height: 10vh;
+    margin: 0;
+    padding: 0;
+}
+
+.text-da {
+    padding: 20px;
+    text-align: center;
+    max-width: 80%;
+    margin-bottom: -20px;
+}
 .text p {
     font-size: 22px;
     padding: 7px;
@@ -187,7 +198,7 @@ header {
     justify-content: center;
     align-items: center;
     height: 22vh;
-    margin-top: 2%;
+    margin-top: 1.5%;
     padding: 0;
     border-radius: 12px;
 }
@@ -197,7 +208,7 @@ header {
     flex-direction: column;
     justify-content: center;
     padding: 18px 25px 18px 30px;
-    width: 500px;
+    width: 600px;
     background-color: #000000;
     border: 1px #ffffff solid;
     border-radius: 10px;
@@ -224,17 +235,19 @@ header {
 
 .ne {
     margin-right: 10px;
-    font-size: 35px;
+    font-size: 50px;
 }
 
 .medium {
+    margin-left: -40px;
     margin-right: 40px;
-    font-size: 20px;
-    text-align: center;
+    font-size: 17px;
+    text-align: left;
+
 }
 
 .up, .medium-da, .down {
-    display: flex;
+    display: inline;
     align-items: center;
 }
 
@@ -242,26 +255,17 @@ header {
     margin-bottom: 5px;
 }
 
-.ne-one, .ne-two, .ne-three {
-    margin-right: 10px;
+.right {
+    margin-left: -20px;
+    margin-right: 20px;
 }
+
+
 
 .delete {
     display: flex;
     justify-content: flex-end;
 }
-
-
-
-.inline span {
-    position: static;
-    margin-bottom: 30px;
-}
-
-/*.weather-info span {*/
-/*    font-size: 22px;*/
-/*    padding: 7px;*/
-/*}*/
 
 .location-block {
     display: flex;
@@ -331,7 +335,47 @@ header {
     background-color: #4d4d4d;
 }
 
+.back-button-center{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+}
+.back-button button {
+    color: white;
+    background-color: transparent;
+    border: 1px solid white;
+    cursor: pointer;
+    border-radius: 12px;
+    padding: 5px 10px;
+    text-align: center;
+    position: fixed;
+    bottom: 120px;
+    margin-left: -2%;
+}
+.back-button button:hover {
+    background-color: #0a0a0a;
+}
 
+.page-numbers {
+    position: relative;
+    text-align: center;
+    margin-top: 15px;
+}
+.page-numbers a{
+    text-decoration: none;
+    padding: 5px;
+    color: white;
+    background-color: #696969;
+    border-radius: 4px;
+}
+
+.left-cursor {
+    margin-right: 4px;
+}
+
+.page-numbers a:hover{
+    background-color: #4d4d4d;
+}
 .footer {
     background-color: #151719;
     padding: 20px 0;
@@ -348,7 +392,6 @@ header {
     margin-left: 30%;
     margin-right: 30%;
 }
-
 
 .footer p {
     margin: 0;
@@ -376,33 +419,6 @@ header {
 .footer ul li a:hover {
     text-decoration: underline;
 }
-/*footer{*/
-/*    display: flex;*/
-/*    flex-direction: column;*/
-/*    align-items: center;*/
-/*    height: 8vh;*/
-/*}*/
-
-/*.footer-block {*/
-/*    width: 800px;*/
-/*    height: 30%;*/
-/*    max-width: 80%;*/
-/*    display: flex;*/
-/*    align-items: center;*/
-/*    text-align: center;*/
-
-/*    font-size: 22px;*/
-/*}*/
-
-/*.footer-central-line {*/
-/*    position: absolute;*/
-/*    !*~~~~~~~~*!*/
-/*    width: 100%;*/
-/*    border-bottom: 1px solid #4d4d4d;*/
-
-/*    height: 21vh;*/
-/*}*/
-
 
 @media screen and (max-width: 2000px){
     .form-control {
@@ -410,7 +426,16 @@ header {
     }
 }
 
+@media screen and (max-width: 1600px){
+    .back-button button {
+        margin-left: -3%;
+
+    }
+}
+
 @media screen and (max-width:1200px) {
+
+
     .weather-info {
         width: 475px;
     }
@@ -419,10 +444,30 @@ header {
         padding-right: 10px;
     }
 
+    .locations-search input[type="text"] {
+        width: 300px;
+        margin-left: 15px;
+    }
+    .back-button button {
+        margin-left: -4%;
+
+    }
 }
 
+@media screen and (max-width:1000px) {
+    .user {
+        margin-left: -60px;
+    }
+    .back-button button {
+        margin-left: -5%;
+
+    }
+}
 
 @media screen and (max-width: 700px) {
+    .location-weather-block {
+        margin-top: 3%;
+    }
 
     .text p {
         margin-left: 15px;
@@ -433,10 +478,94 @@ header {
     }
     .locations-search input[type="text"] {
         width: 60%;
-        margin-left: 5px;
+        margin-left: 15px;
     }
     .locations-search button[type="submit"] {
         width: 30%;
     }
+    .back-button button {
+        margin-left: -9%;
+
+    }
 }
 
+@media screen and (max-width: 550px){
+    .location-weather-block {
+        /*height: 22vh;*/
+        margin-top: 4%;
+    }
+    .left img {
+        margin-left: -30px;
+    }
+
+    .medium {
+        margin-left: -75px;
+    }
+    .right{
+        margin-left: -60px;
+    }
+    .user {
+        margin-left: -47px;
+    }
+    .user button {
+        margin-left: -19px;
+    }
+    .locations-search input[type="text"] {
+        width: 70px;
+        margin-left: 5px;
+    }
+    .locations-search button[type="submit"]{
+        width: 50px;
+    }
+    .back-button button {
+        margin-left: -9%;
+
+    }
+}
+
+@media screen and (max-width: 525px){
+    .location-weather-block {
+        /*height: 22vh;*/
+        margin-top: 4%;
+    }
+    .user {
+        margin-left: -52px;
+    }
+    .user button {
+        margin-left: -19px;
+    }
+}
+
+@media screen and (max-width: 500px){
+    .location-weather-block {
+        margin-top: 4%;
+    }
+
+
+    .left img {
+        margin-left: -30px;
+    }
+
+    .medium {
+        margin-left: -75px;
+    }
+    .right{
+        margin-left: -56px;
+    }
+    .user {
+        margin-left: -47px;
+    }
+    .user button {
+        margin-left: -19px;
+    }
+    .locations-search input[type="text"] {
+        width: 70px;
+        margin-left: 5px;
+    }
+    .locations-search button[type="submit"]{
+        width: 50px;
+    }
+    .back-button button {
+        margin-left: -9%;
+    }
+}
