@@ -1,6 +1,9 @@
 package ru.yuubi.weather_viewer.dto;
 
 public class WeatherDescriptionDTO {
+    private int locationId;
+    private double lat;
+    private double lon;
     private String locationInfo;
     private String weatherDescription;
     private String temp;
@@ -15,7 +18,7 @@ public class WeatherDescriptionDTO {
 
     public WeatherDescriptionDTO(String locationInfo, String weatherDescription, String temp,
                                  String tempFeelsLike, String pressure, String humidity,
-                                 String windSpeed, String iconUrl) {
+                                 String windSpeed, String iconUrl, double lat, double lon) {
         this.locationInfo = locationInfo;
         this.weatherDescription = weatherDescription;
         this.temp = temp;
@@ -24,6 +27,16 @@ public class WeatherDescriptionDTO {
         this.humidity = humidity;
         this.windSpeed = windSpeed;
         this.iconUrl = iconUrl;
+        this.lat = lat;
+        this.lon = lon;
+    }
+
+    public int getLocationId() {
+        return locationId;
+    }
+
+    public void setLocationId(int locationId) {
+        this.locationId = locationId;
     }
 
     public String getLocationInfo() {
@@ -88,5 +101,21 @@ public class WeatherDescriptionDTO {
 
     public void setIconUrl(String iconUrl) {
         this.iconUrl = iconUrl;
+    }
+
+    public double getLat() {
+        return lat;
+    }
+
+    public void setLat(double lat) {
+        this.lat = lat;
+    }
+
+    public double getLon() {
+        return lon;
+    }
+
+    public void setLon(double lon) {
+        this.lon = lon;
     }
 }
