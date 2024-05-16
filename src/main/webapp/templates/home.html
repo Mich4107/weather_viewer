@@ -14,7 +14,7 @@
     </div>
 
     <form th:action="@{/locations}" method="get" class="locations-search">
-        <input type="text" name="city_name" placeholder="Search...">
+        <input type="text" name="city_name" placeholder="Search..." required title="Enter the city" style="margin-left: 65px">
         <button type="submit">
             <img src="../static/img/search.png"
                  height="25"
@@ -33,7 +33,7 @@
     <div class="weathers">
         <div class="text">
             <p>Weather viewing locations have not been added yet. </p>
-            <p>Search your first location ;)</p>
+            <p>Search for your first location ;)</p>
         </div>
     </div>
 </div>
@@ -42,19 +42,23 @@
 <div th:each="location : ${userLocations}">
     <div class="location-weather-block">
         <div class="weather">
-            <p class="city-name">Moscow, RU</p>
+            <p class="city-name" th:text="${location.getLocationInfo()}">Moscow, RU</p>
             <div class="da">
                 <div class="left">
-                    <p class="ne">+8</p>
+                    <p class="ne" th:text="${location.getTemp()}">+8</p>
                     <img th:src="${location.getIconUrl()}" alt="облачко" width="100px" height="100px">
                 </div>
                 <div class="medium">
-                    <p class="medium-text">Cloudies<br>Feels like +7</p>
+                    <p class="medium-text" th:text="${location.getWeatherDescription()}">Cloudies</p>
+                    <p th:text="${location.getTempFeelsLike()}" style="color: #979997">Feels like +7</p>
                 </div>
                 <div class="right">
-                    <p class="up"><img class="ne-one" src="../static/img/humidity.png" alt="осадки" width="25px" height=25px>2,0 m/s</p>
-                    <p class="medium-da"><img class="ne-two" src="../static/img/wind.png" alt="ветер" width="25px" height=25px>70%</p>
-                    <p class="down"><img class="ne-three" src="../static/img/pressure.png" alt="ветер" width="25px" height=25px>782</p>
+                    <img class="ne-two" src="../static/img/wind.png" alt="ветер" width="25px" height=25px>
+                    <p class="medium-da" th:text="${location.getWindSpeed()}">2,0 m/s</p><br>
+                    <img class="ne-one" src="../static/img/humidity.png" alt="осадки" width="25px" height=25px>
+                    <p class="up" th:text="${location.getHumidity()}">70%</p><br>
+                    <img class="ne-three" src="../static/img/pressure.png" alt="ветер" width="25px" height=25px>
+                    <p class="down" th:text="${location.getPressure()}">782</p><br>
                 </div>
             </div>
 
