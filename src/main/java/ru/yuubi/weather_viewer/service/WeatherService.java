@@ -23,6 +23,10 @@ public class WeatherService {
         return locationDAO.getLocationsByUserId(userId);
     }
 
+    public void deleteLocation(int locationId) {
+        locationDAO.deleteLocation(locationId);
+    }
+
     public WeatherDescriptionDTO createDescriptionFromResponseDto(ResponseWeatherDTO responseWeatherDTO) {
         String locationInfo = responseWeatherDTO.getLocationName() + ", " + responseWeatherDTO.getCountryCode();
         String weatherDescription = responseWeatherDTO.getDescription();
