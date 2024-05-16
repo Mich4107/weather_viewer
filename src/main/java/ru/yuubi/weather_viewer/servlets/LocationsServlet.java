@@ -1,31 +1,29 @@
 package ru.yuubi.weather_viewer.servlets;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import ru.yuubi.weather_viewer.dao.UserDAO;
 import ru.yuubi.weather_viewer.dto.LocationDTO;
-import ru.yuubi.weather_viewer.dto.WeatherDTO;
+import ru.yuubi.weather_viewer.dto.ResponseWeatherDTO;
 import ru.yuubi.weather_viewer.entity.Location;
 import ru.yuubi.weather_viewer.entity.SessionEntity;
 import ru.yuubi.weather_viewer.entity.User;
-import ru.yuubi.weather_viewer.service.WeatherApiService;
-import ru.yuubi.weather_viewer.servlets.BaseServlet;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @WebServlet("/locations")
 public class LocationsServlet extends BaseServlet {
-    private WeatherApiService weatherApiService = new WeatherApiService();
-
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String cityName = req.getParameter("city_name");
+        String cityName = weatherApiService.fillSpaces(req.getParameter("city_name"));
+        String status = req.getParameter("status");
+
+        if(status != null) {
+            context.setVariable("userAlreadyHasThisLocation", true);
+        }
 
         HttpSession httpSession = req.getSession();
         SessionEntity sessionEntity = (SessionEntity) httpSession.getAttribute("sessionEntity");
@@ -34,6 +32,7 @@ public class LocationsServlet extends BaseServlet {
 
         List<LocationDTO> locations = weatherApiService.getLocationsByCityName(cityName);
 
+        context.setVariable("city_name", cityName);
         context.setVariable("locations", locations);
         context.setVariable("userLogin", login);
         templateEngine.process("locations", context, resp.getWriter());
@@ -45,12 +44,18 @@ public class LocationsServlet extends BaseServlet {
         double lon = Double.parseDouble(req.getParameter("lon"));
         String userLogin = req.getParameter("user");
 
-        WeatherDTO weatherDTO = weatherApiService.getWeatherByCoordinates(lat, lon);
+        ResponseWeatherDTO responseWeatherDTO = weatherApiService.getWeatherByCoordinates(lat, lon);
         User user = authService.getUserByLogin(userLogin);
-        String locationName = weatherDTO.getLocationName();
+        String locationName = responseWeatherDTO.getLocationName();
         int userId = user.getId();
 
         Location location = new Location(locationName, userId, lat, lon);
+
+        if(weatherService.isUserAlreadyHasThisLocation(location)) {
+            String cityName = req.getParameter("city_name");
+            resp.sendRedirect("/locations?city_name="+cityName+"&status=hasLoc");
+            return;
+        }
 
         weatherService.saveLocation(location);
 
