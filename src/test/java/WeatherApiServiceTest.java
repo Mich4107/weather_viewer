@@ -201,7 +201,6 @@ class WeatherApiServiceTest {
             """;
     private HttpClient mockClient = mock(HttpClient.class);
     private WeatherApiService weatherAPIService = new WeatherApiService(mockClient);
-    private String wrongUrl = "https://api.openweathermap.org/data/2.5/weather?lat=0&lon=0&appid=null";
 
     @Test
     void shouldGetLocationsForParticularCity() throws IOException, InterruptedException {
@@ -224,7 +223,6 @@ class WeatherApiServiceTest {
         }
 
         assertTrue(isAllLocationNamesEqualsToCityName);
-
     }
 
     @Test
