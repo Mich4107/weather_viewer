@@ -36,8 +36,7 @@ public class RegistrationServlet extends BaseServlet {
         cookie.setMaxAge(60*60*24);
         resp.addCookie(cookie);
 
-        SessionEntity sessionEntity = new SessionEntity(cookie.getValue(), userId, LocalDateTime.now().plusSeconds(60*10));
-
+        SessionEntity sessionEntity = new SessionEntity(cookie.getValue(), userId, LocalDateTime.now().plusSeconds(60*60*24));
         authService.saveSessionEntity(sessionEntity);
 
         resp.sendRedirect("/home");

@@ -3,13 +3,8 @@ package ru.yuubi.weather_viewer.servlets.auth;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.*;
-import org.thymeleaf.TemplateEngine;
-import org.thymeleaf.context.WebContext;
-import org.thymeleaf.web.IWebExchange;
-import org.thymeleaf.web.servlet.JakartaServletWebApplication;
 import ru.yuubi.weather_viewer.entity.SessionEntity;
 import ru.yuubi.weather_viewer.entity.User;
-import ru.yuubi.weather_viewer.service.AuthService;
 import ru.yuubi.weather_viewer.servlets.BaseServlet;
 
 import java.io.IOException;
@@ -47,7 +42,7 @@ public class AuthenticationServlet extends BaseServlet {
         cookie.setMaxAge(60*60*24);
         resp.addCookie(cookie);
 
-        SessionEntity sessionEntity = new SessionEntity(cookie.getValue(), userId, LocalDateTime.now().plusSeconds(60*10));
+        SessionEntity sessionEntity = new SessionEntity(cookie.getValue(), userId, LocalDateTime.now().plusSeconds(60*60*24));
         authService.saveSessionEntity(sessionEntity);
 
         resp.sendRedirect("/home");
