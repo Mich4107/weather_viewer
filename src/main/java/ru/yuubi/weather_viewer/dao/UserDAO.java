@@ -2,7 +2,6 @@ package ru.yuubi.weather_viewer.dao;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.query.Query;
 import ru.yuubi.weather_viewer.entity.User;
 import ru.yuubi.weather_viewer.utils.HibernateUtil;
 
@@ -31,7 +30,7 @@ public class UserDAO {
         }
         return user;
     }
-    public void save(User user) {
+    public void saveUser(User user) {
         Session session = sessionFactory.getCurrentSession();
         try(session) {
             session.beginTransaction();

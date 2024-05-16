@@ -15,7 +15,7 @@ public class AuthService {
         String password = user.getPassword();
         String hashedPassword = PasswordEncryptorUtil.hashPassword(password);
         user.setPassword(hashedPassword);
-        userDAO.save(user);
+        userDAO.saveUser(user);
     }
 
     public User getUserByLoginAndPassword(String login, String password) {
