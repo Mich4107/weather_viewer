@@ -22,7 +22,7 @@ public class WeatherApiService {
     private static final String LOCATIONS_URL = "http://api.openweathermap.org/geo/1.0/direct";
     private HttpClient client;
 
-    public WeatherDTO getWeatherByCoordinates(double lat, double lon){
+    public ResponseWeatherDTO getWeatherByCoordinates(double lat, double lon){
         String requestUrl = WEATHER_URL +"?lat="+lat+"&lon="+lon+"&appid="+ API_KEY +"&units=metric";
         try {
             String jsonResponse = getResponse(requestUrl);
@@ -33,7 +33,7 @@ public class WeatherApiService {
     }
 
     public List<LocationDTO> getLocationsByCityName(String name) {
-        String requestURL = LOCATIONS_URL+"?q="+name+"&limit="+10+"&appid="+API_KEY;
+        String requestURL = LOCATIONS_URL+"?q="+name+"&limit="+5+"&appid="+API_KEY;
         try {
             String jsonResponse = getResponse(requestURL);
             return getLocationsFromJson(jsonResponse);
