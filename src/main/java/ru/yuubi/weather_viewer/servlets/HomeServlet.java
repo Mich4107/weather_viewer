@@ -5,14 +5,13 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import ru.yuubi.weather_viewer.dto.ResponseWeatherDTO;
 import ru.yuubi.weather_viewer.dto.WeatherDescriptionDTO;
 import ru.yuubi.weather_viewer.entity.Location;
 import ru.yuubi.weather_viewer.entity.SessionEntity;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
+
 
 @WebServlet("/home")
 public class HomeServlet extends BaseServlet {
@@ -21,29 +20,24 @@ public class HomeServlet extends BaseServlet {
         HttpSession httpSession = req.getSession();
         SessionEntity sessionEntity = (SessionEntity) httpSession.getAttribute("sessionEntity");
         httpSession.removeAttribute("sessionEntity");
-        String login = authService.getUserLoginFromSessionEntity(sessionEntity);
 
+        String login = authService.getUserLoginFromSessionEntity(sessionEntity);
         int userId = sessionEntity.getUserId();
+
         List<Location> locations = weatherService.getLocationsByUserId(userId);
 
+        int pageNumber = weatherService.getPageNumber(req.getParameter("page"));
+        int totalPages = weatherService.getTotalPages(locations.size());
+        int startIndex = weatherService.getStartIndex(pageNumber);
+        int endIndex = weatherService.getEndIndex(pageNumber, locations.size());
 
-        List<WeatherDescriptionDTO> descriptionsOfUserLocations = new ArrayList<>();
+        List<WeatherDescriptionDTO> descriptionsOfUserLocations = weatherService.getDescriptions(locations, weatherApiService);
 
-        for(Location location : locations) {
-            double lat = location.getLatitude();
-            double lon = location.getLongitude();
+        List<WeatherDescriptionDTO> descriptionsForParticularPage = descriptionsOfUserLocations.subList(startIndex, endIndex);
 
-            ResponseWeatherDTO responseWeatherDTO = weatherApiService.getWeatherByCoordinates(lat, lon);
-
-            WeatherDescriptionDTO weatherDescription = weatherService.createDescriptionFromResponseDto(responseWeatherDTO);
-            weatherDescription.setLocationId(location.getId());
-
-            descriptionsOfUserLocations.add(weatherDescription);
-        }
-
-
-
-        context.setVariable("userLocations", descriptionsOfUserLocations);
+        context.setVariable("totalPages", totalPages);
+        context.setVariable("currentPage", pageNumber);
+        context.setVariable("userLocations", descriptionsForParticularPage);
         context.setVariable("userLogin", login);
         templateEngine.process("home", context, resp.getWriter());
     }
@@ -51,9 +45,7 @@ public class HomeServlet extends BaseServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         int locationId = Integer.parseInt(req.getParameter("locationId"));
-
         weatherService.deleteLocation(locationId);
-
         resp.sendRedirect("/home");
     }
 }
