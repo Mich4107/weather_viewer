@@ -32,24 +32,22 @@ public class WeatherService {
 
         if(responseTemp > 0) {
             temp = "+"+responseTemp+"°";
-        } else if (responseTemp < 0) {
-            temp = "-"+responseTemp+"°";
-        } else {
-            temp = String.valueOf(responseTemp);
+        }  else {
+            temp = responseTemp+"°";
         }
 
         if(responseTempFeelsLike > 0) {
             tempFeelsLike = "Feels like +"+responseTempFeelsLike+"°";
-        } else if (responseTempFeelsLike < 0) {
-            tempFeelsLike = "Feels like -"+responseTempFeelsLike+"°";
-        } else {
-            tempFeelsLike = "Feels like "+responseTempFeelsLike;
+        }  else {
+            tempFeelsLike = "Feels like "+responseTempFeelsLike+"°";
         }
 
         String pressure = responseWeatherDTO.getPressure()+" mmHg";
         String humidity = responseWeatherDTO.getHumidity()+"%";
         String windSpeed = responseWeatherDTO.getWindSpeed()+" m/s";
         String iconUrl = "https://openweathermap.org/img/wn/"+responseWeatherDTO.getIconId()+"@2x.png";
+        double lat = responseWeatherDTO.getLatitude();
+        double lon = responseWeatherDTO.getLongitude();
 
         return new WeatherDescriptionDTO(locationInfo, weatherDescription, temp,
                 tempFeelsLike, pressure, humidity, windSpeed, iconUrl);
