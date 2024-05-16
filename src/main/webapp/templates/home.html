@@ -78,41 +78,31 @@
 </div>
 
 
-<!--<div th:each="location : ${userLocations}">-->
-<!--    <div class="location-weather-block">-->
-<!--        <div class="weather-info">-->
-<!--            <div class="city-code-info">-->
-<!--                <span th:text="${location.getLocationInfo()}" style="font-size: 18px"></span>-->
-<!--            </div>-->
+<div class="page-numbers">
+    <div th:if="${totalPages} > 1">
 
-<!--            <div class="temp-info">-->
-<!--                <span th:text="${location.getTemp()}" style="font-size: 28px"></span>-->
-<!--                <img th:src="${location.getIconUrl()}" style="background: red"/>-->
-<!--            </div>-->
+        <span th:if="${currentPage - 1} >= 1" class="left-cursor">
+            <a th:href="'/home?page='+${currentPage - 1}"> < </a>
+        </span>
 
-<!--            <span th:text="${location.getWeatherDescription()}" ></span>-->
+        <span th:each="pageNumber : ${#numbers.sequence(1, totalPages)}">
+            <a th:href="'/home?page='+${pageNumber}"><span th:text="${pageNumber}"></span></a>
+        </span>
 
-<!--            <span th:text="${location.getTempFeelsLike()}" ></span>-->
+        <span th:if="${currentPage+1 <= totalPages}">
+            <a th:href="'/home?page='+${currentPage + 1}"> > </a>
+        </span>
+
+    </div>
+</div>
 
 
-<!--            <img src="../static/img/wind.png" width="25" height="25"/> <span th:text="${location.getWindSpeed()}" ></span>-->
-
-<!--            <img src="../static/img/humidity.png" width="25" height="25"/> <span th:text="${location.getHumidity()}" ></span>-->
-
-<!--            <img src="../static/img/pressure.png" width="25" height="25"/><span th:text="${location.getPressure()}" ></span>-->
-
-<!--            <form th:action="@{/home}" method="post">-->
-
-<!--                <input type="hidden" name="locationId" th:value="${location.getLocationId()}">-->
-
-<!--                <button type="submit">-->
-<!--                    <img src="../static/img/trashcan.png"-->
-<!--                         height="25"-->
-<!--                         width="25" /></button>-->
-<!--            </form>-->
-<!--        </div>-->
-<!--    </div>-->
-<!--</div>-->
+<footer class="footer">
+    <div class="container">
+        <hr class="footer-separator"/>
+        <p>Made by Mich4107</p>
+    </div>
+</footer>
 
 </body>
 </html>
