@@ -39,6 +39,15 @@
     </div>
 </div>
 
+
+<div th:if="${userAlreadyHasThisLocation}">
+    <div class="weathers-da">
+        <div class="text-da">
+            <p>You are already have this location in your list.</p>
+        </div>
+    </div>
+</div>
+
 <div th:each="location : ${locations}">
     <div class="location-block">
         <div class="location-info">
@@ -46,12 +55,18 @@
                 <span th:text="${location.getName() + ', ' + location.getCountry()}" class="div1"></span>
             </div>
             <div th:if="${location.getName() != location.getState()}">
-                <span th:text="${location.getName() +', '+ location.getState() +', '+ location.getCountry()}" class="div1"></span>
+                <span th:if="${location.getState() != null}">
+                    <span th:text="${location.getName() +', '+ location.getState() +', '+ location.getCountry()}" class="div1"></span>
+                </span>
+                <span th:if="${location.getState() == null}">
+                    <span th:text="${location.getName() +', '+ location.getCountry()}" class="div1"></span>
+                </span>
             </div>
             <form th:action="@{/locations}" method="post">
                 <input type="hidden" name="lat" th:value="${location.getLatitude()}">
                 <input type="hidden" name="lon" th:value="${location.getLongitude()}">
                 <input type="hidden" name="user" th:value="${userLogin}">
+                <input type="hidden" name="city_name" th:value="${city_name}">
 
                 <button type="submit">
                     <img src="../static/img/checkmark.png"
@@ -65,6 +80,11 @@
     </div>
 </div>
 
+<div class="back-button-center">
+    <form action="/home" class="back-button">
+        <button type="submit">Go back</button>
+    </form>
+</div>
 
 <footer class="footer">
     <div class="container">
@@ -72,10 +92,5 @@
         <p>Made by Mich4107</p>
     </div>
 </footer>
-<!--<footer>-->
-<!--    <div class="footer-block">-->
-<!--        <div class="footer-central-line"></div>-->
-<!--    </div>-->
-<!--</footer>-->
 </body>
 </html>
