@@ -86,7 +86,14 @@ public class WeatherApiService {
             double lat = rootNode.get(i).get("lat").asDouble();
             double lon = rootNode.get(i).get("lon").asDouble();
             String countryCode = rootNode.get(i).get("country").asText();
-            String state = rootNode.get(i).get("state").asText();
+
+            String state;
+
+            if(rootNode.get(i).get("state") != null) {
+                state = rootNode.get(i).get("state").asText();
+            } else {
+                state = null;
+            }
 
             LocationDTO locationDTO = new LocationDTO(name, lat, lon, countryCode, state);
             locations.add(locationDTO);
