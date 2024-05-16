@@ -3,7 +3,7 @@ package ru.yuubi.weather_viewer.service;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import ru.yuubi.weather_viewer.dto.WeatherDTO;
+import ru.yuubi.weather_viewer.dto.ResponseWeatherDTO;
 import ru.yuubi.weather_viewer.dto.LocationDTO;
 import ru.yuubi.weather_viewer.exception.WeatherApiException;
 import ru.yuubi.weather_viewer.utils.ConfigReaderUtil;
@@ -107,6 +107,18 @@ public class WeatherApiService {
         }
         return locations;
     }
+
+    public String fillSpaces(String cityName) {
+        if(cityName.contains(" ")) {
+            cityName = cityName.replaceAll(" ", "%20");
+        }
+        return cityName;
+    }
+
+    private int convertToMmHg(int pressure) {
+        return (int) Math.round(pressure * 0.75006157);
+    }
+
 
     public WeatherApiService() {
         this.client = HttpClient.newHttpClient();
