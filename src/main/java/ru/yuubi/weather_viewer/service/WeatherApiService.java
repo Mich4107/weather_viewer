@@ -59,7 +59,7 @@ public class WeatherApiService {
         }
     }
 
-    private WeatherDTO getWeatherFromJson(String jsonResponse) throws JsonProcessingException {
+    private ResponseWeatherDTO getWeatherFromJson(String jsonResponse) throws JsonProcessingException {
         ObjectMapper objectMapper = new ObjectMapper();
         JsonNode rootNode = objectMapper.readTree(jsonResponse);
 
@@ -68,13 +68,20 @@ public class WeatherApiService {
         String description = rootNode.get("weather").get(0).get("description").asText();
         double temp = rootNode.get("main").get("temp").asDouble();
         double tempFeelsLike = rootNode.get("main").get("feels_like").asDouble();
+        int pressure = rootNode.get("main").get("pressure").asInt();
+        int humidity = rootNode.get("main").get("humidity").asInt();
+        double windSpeed = rootNode.get("wind").get("speed").asDouble();
         String locationName = rootNode.get("name").asText();
         String countryCode = rootNode.get("sys").get("country").asText();
         String iconId = rootNode.get("weather").get(0).get("icon").asText();
 
+        pressure = convertToMmHg(pressure);
         int roundedTemp = (int) Math.round(temp);
         int roundedTempFeelsLike = (int) Math.round(tempFeelsLike);
-        return new WeatherDTO(longitude, latitude, description, roundedTemp, roundedTempFeelsLike, locationName, countryCode, iconId);
+
+        return new ResponseWeatherDTO(longitude, latitude, description,
+                roundedTemp, roundedTempFeelsLike, pressure, humidity,
+                windSpeed, locationName, countryCode, iconId);
     }
 
     private List<LocationDTO> getLocationsFromJson(String jsonResponse) throws JsonProcessingException {
