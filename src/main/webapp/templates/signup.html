@@ -14,7 +14,7 @@
             <form th:action="@{/signup}" method="post">
 
                 <div class="form-group col-md-6">
-                    <label for="inputEmail4">Login</label> <span class="wrong-data" th:text="${userAlreadyExists}" style="color: orangered; font-size: 12px; margin-left: 121px"></span>
+                    <label for="inputEmail4">Login</label>
                     <input class="form-control" id="inputEmail4" type="text" name="login" required>
                 </div>
 
@@ -22,6 +22,8 @@
                     <label for="inputPassword4">Password</label>
                     <input type="password" class="form-control" id="inputPassword4" name="password" required>
                 </div>
+
+                <span class="wrong-data" th:text="${userAlreadyExists}" style="color: orangered; font-size: 12px; margin-left: 15px; margin-bottom: 15px; display: block"></span>
 
                 <button type="submit" class="btn btn-primary">Create account</button>
                 <span class="sign-up-href">

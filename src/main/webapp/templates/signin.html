@@ -1,5 +1,4 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-
 <head>
     <title>Weather Viewer</title>
     <meta name="viewport" content="width=device-width, initial scale=1">
@@ -13,7 +12,7 @@
         <div class="registration-form">
             <form th:action="@{/signin}" method="post">
                 <div class="form-group col-md-6">
-                    <label for="inputEmail4">Login</label>   <span class="wrong-data" th:text="${userIsNotValid}" style="color: orangered; font-size: 12px; margin-left: 96px"></span>
+                    <label for="inputEmail4">Login</label>
                     <input class="form-control" id="inputEmail4" name="login" required>
                 </div>
 
@@ -21,6 +20,8 @@
                     <label for="inputPassword4">Password</label>
                     <input type="password" class="form-control" id="inputPassword4" name="password" required>
                 </div>
+
+                <span class="wrong-data" th:text="${userIsNotValid}" style="color: orangered; font-size: 12px; margin-left: 15px; margin-bottom: 15px; display: block"></span>
 
                 <button type="submit" class="btn btn-primary">Log in</button>
                 <span class="sign-up-href">
