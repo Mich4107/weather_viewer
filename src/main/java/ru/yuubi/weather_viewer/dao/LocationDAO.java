@@ -55,16 +55,6 @@ public class LocationDAO {
         }
     }
 
-    public Location getLocation(int id) {
-        Session session = sessionFactory.getCurrentSession();
-        try(session) {
-            session.beginTransaction();
-            Location location = session.get(Location.class, id);
-            session.getTransaction().commit();
-            return location;
-        }
-    }
-
     public void deleteLocation(int id) {
         Session session = sessionFactory.getCurrentSession();
         try(session) {
