@@ -12,6 +12,8 @@ import ru.yuubi.weather_viewer.entity.SessionEntity;
 import ru.yuubi.weather_viewer.entity.User;
 
 import java.io.IOException;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 @WebServlet("/locations")
@@ -53,7 +55,8 @@ public class LocationsServlet extends BaseServlet {
 
         if(weatherService.isUserAlreadyHasThisLocation(location)) {
             String cityName = req.getParameter("city_name");
-            resp.sendRedirect("/locations?city_name="+cityName+"&status=hasLoc");
+            String encodedCityName = URLEncoder.encode(cityName, StandardCharsets.UTF_8);
+            resp.sendRedirect("/locations?city_name="+encodedCityName+"&status=hasLoc");
             return;
         }
 
