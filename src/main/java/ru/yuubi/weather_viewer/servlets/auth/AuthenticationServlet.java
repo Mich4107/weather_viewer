@@ -3,11 +3,14 @@ package ru.yuubi.weather_viewer.servlets.auth;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.*;
+import org.apache.commons.lang3.StringEscapeUtils;
 import ru.yuubi.weather_viewer.entity.SessionEntity;
 import ru.yuubi.weather_viewer.entity.User;
 import ru.yuubi.weather_viewer.servlets.BaseServlet;
 
 import java.io.IOException;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
@@ -29,7 +32,10 @@ public class AuthenticationServlet extends BaseServlet {
         String login = req.getParameter("login");
         String password = req.getParameter("password");
 
-        User user = authService.getUserByLoginAndPassword(login, password);
+        String decodedLogin = StringEscapeUtils.unescapeHtml4(login);
+        String decodedPassword = StringEscapeUtils.unescapeHtml4(password);
+
+        User user = authService.getUserByLoginAndPassword(decodedLogin, decodedPassword);
 
         if(user == null) {
             resp.sendRedirect("/signin?status=wrong-password");
