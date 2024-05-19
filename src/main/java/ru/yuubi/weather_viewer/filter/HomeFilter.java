@@ -24,6 +24,11 @@ public class HomeFilter implements Filter {
         Cookie[] cookies = req.getCookies();
         String searchCookieName = "sessionId";
 
+        if(cookies == null) {
+            resp.sendRedirect("/signup");
+            return;
+        }
+
         for(Cookie c : cookies) {
             if(c.getName().equals(searchCookieName)) {
                 String sessionGUID = c.getValue();

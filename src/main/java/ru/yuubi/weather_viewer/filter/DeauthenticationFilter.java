@@ -21,6 +21,12 @@ public class DeauthenticationFilter implements Filter {
 
         Cookie[] cookies = req.getCookies();
         String searchCookieName = "sessionId";
+
+        if(cookies == null) {
+            filterChain.doFilter(servletRequest, servletResponse);
+            return;
+        }
+
         for(Cookie cookie : cookies) {
             if(cookie.getName().equals(searchCookieName)) {
                 String sessionGUIDValue = cookie.getValue();

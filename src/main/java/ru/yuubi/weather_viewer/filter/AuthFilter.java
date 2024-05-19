@@ -23,6 +23,11 @@ public class AuthFilter implements Filter {
         Cookie[] cookies = req.getCookies();
         String searchCookieName = "sessionId";
 
+        if(cookies == null) {
+            filterChain.doFilter(servletRequest, servletResponse);
+            return;
+        }
+
         for(Cookie c : cookies) {
             if(c.getName().equals(searchCookieName)) {
                 String sessionGUID = c.getValue();
