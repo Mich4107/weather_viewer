@@ -9,7 +9,6 @@ import ru.yuubi.weather_viewer.dao.SessionDAO;
 import ru.yuubi.weather_viewer.entity.SessionEntity;
 
 import java.io.IOException;
-import java.time.LocalDateTime;
 
 @WebFilter({"/signup", "/signin"})
 public class AuthFilter implements Filter {

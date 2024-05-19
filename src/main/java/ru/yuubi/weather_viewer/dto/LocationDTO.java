@@ -1,8 +1,5 @@
 package ru.yuubi.weather_viewer.dto;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonProperty;
-
 public class LocationDTO {
     private String name;
     private double latitude;

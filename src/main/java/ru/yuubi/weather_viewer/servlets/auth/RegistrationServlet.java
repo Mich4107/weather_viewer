@@ -9,9 +9,6 @@ import ru.yuubi.weather_viewer.entity.User;
 import ru.yuubi.weather_viewer.servlets.BaseServlet;
 
 import java.io.IOException;
-import java.net.URLDecoder;
-import java.net.URLEncoder;
-import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
 import java.util.UUID;
 

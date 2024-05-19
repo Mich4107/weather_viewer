@@ -6,8 +6,6 @@ import ru.yuubi.weather_viewer.dto.ResponseWeatherDTO;
 import ru.yuubi.weather_viewer.dto.WeatherDescriptionDTO;
 import ru.yuubi.weather_viewer.entity.Location;
 
-import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.List;
 
