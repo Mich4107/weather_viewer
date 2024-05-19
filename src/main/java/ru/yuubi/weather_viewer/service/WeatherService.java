@@ -64,15 +64,6 @@ public class WeatherService {
         double lat = location.getLatitude();
         double lon = location.getLongitude();
 
-        BigDecimal roundedLat = new BigDecimal(lat);
-        BigDecimal roundedLon = new BigDecimal(lon);
-
-        roundedLat = roundedLat.setScale(4, RoundingMode.HALF_UP);
-        roundedLon = roundedLon.setScale(4, RoundingMode.HALF_UP);
-
-        lat = Double.parseDouble(String.valueOf(roundedLat));
-        lon = Double.parseDouble(String.valueOf(roundedLon));
-
         int userId = location.getUserId();
 
         Location userLocation = locationDAO.getLocationByLatAndLon(lat, lon, userId);
