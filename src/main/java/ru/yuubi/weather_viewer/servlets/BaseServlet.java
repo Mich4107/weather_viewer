@@ -25,12 +25,12 @@ public class BaseServlet extends HttpServlet {
 
     @Override
     public void init(ServletConfig config) throws ServletException {
+        templateEngine = (TemplateEngine) getServletContext().getAttribute("templateEngine");
         super.init(config);
     }
 
     @Override
     protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        templateEngine = (TemplateEngine) getServletContext().getAttribute("templateEngine");
         webExchange = JakartaServletWebApplication.buildApplication(getServletContext()).buildExchange(req, resp);
         context = new WebContext(webExchange);
 
