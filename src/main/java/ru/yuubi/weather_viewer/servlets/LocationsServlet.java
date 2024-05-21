@@ -20,7 +20,7 @@ import java.util.List;
 public class LocationsServlet extends BaseServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String cityName = weatherApiService.fillSpaces(req.getParameter("city_name"));
+        String cityName = openWeatherApiService.fillSpaces(req.getParameter("city_name"));
         String status = req.getParameter("status");
 
         if(status != null) {
@@ -32,7 +32,7 @@ public class LocationsServlet extends BaseServlet {
         httpSession.removeAttribute("sessionEntity");
         String login = authService.getUserLoginFromSessionEntity(sessionEntity);
 
-        List<LocationDTO> locations = weatherApiService.getLocationsByCityName(cityName);
+        List<LocationDTO> locations = openWeatherApiService.getLocationsByCityName(cityName);
 
         context.setVariable("city_name", cityName);
         context.setVariable("locations", locations);
@@ -46,7 +46,7 @@ public class LocationsServlet extends BaseServlet {
         double lon = Double.parseDouble(req.getParameter("lon"));
         String userLogin = req.getParameter("user");
 
-        ResponseWeatherDTO responseWeatherDTO = weatherApiService.getWeatherByCoordinates(lat, lon);
+        ResponseWeatherDTO responseWeatherDTO = openWeatherApiService.getWeatherByCoordinates(lat, lon);
         User user = authService.getUserByLogin(userLogin);
         String locationName = responseWeatherDTO.getLocationName();
         int userId = user.getId();

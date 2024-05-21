@@ -1,7 +1,7 @@
 import org.junit.jupiter.api.Test;
 import ru.yuubi.weather_viewer.dto.LocationDTO;
-import ru.yuubi.weather_viewer.exception.WeatherApiException;
-import ru.yuubi.weather_viewer.service.WeatherApiService;
+import ru.yuubi.weather_viewer.exception.WeatherApiCallException;
+import ru.yuubi.weather_viewer.service.OpenWeatherApiService;
 
 import java.io.IOException;
 import java.net.http.HttpClient;
@@ -15,7 +15,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-class WeatherApiServiceTest {
+class OpenWeatherApiServiceTest {
 
     private static final String response = """
                 [
@@ -200,7 +200,7 @@ class WeatherApiServiceTest {
                 ]
             """;
     private HttpClient mockClient = mock(HttpClient.class);
-    private WeatherApiService weatherAPIService = new WeatherApiService(mockClient);
+    private OpenWeatherApiService openWeatherAPIService = new OpenWeatherApiService(mockClient);
 
     @Test
     void shouldGetLocationsForParticularCity() throws IOException, InterruptedException {
@@ -213,7 +213,7 @@ class WeatherApiServiceTest {
 
         String cityName = "Moscow";
 
-        List<LocationDTO> locations = weatherAPIService.getLocationsByCityName(cityName);
+        List<LocationDTO> locations = openWeatherAPIService.getLocationsByCityName(cityName);
 
         boolean isAllLocationNamesEqualsToCityName = true;
         for(LocationDTO location : locations) {
@@ -237,7 +237,7 @@ class WeatherApiServiceTest {
         String cityName = "Moscow";
 
 
-        assertThrows(WeatherApiException.class, () ->
-                weatherAPIService.getLocationsByCityName(cityName));
+        assertThrows(WeatherApiCallException.class, () ->
+                openWeatherAPIService.getLocationsByCityName(cityName));
     }
 }

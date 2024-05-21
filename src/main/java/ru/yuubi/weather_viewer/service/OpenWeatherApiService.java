@@ -16,7 +16,7 @@ import java.net.http.HttpResponse;
 import java.util.ArrayList;
 import java.util.List;
 
-public class WeatherApiService {
+public class OpenWeatherApiService {
     private static final String API_KEY = ConfigReaderUtil.getApiKey();
     private static final String WEATHER_URL = "https://api.openweathermap.org/data/2.5/weather";
     private static final String LOCATIONS_URL = "http://api.openweathermap.org/geo/1.0/direct";

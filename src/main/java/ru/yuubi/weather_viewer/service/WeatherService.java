@@ -91,13 +91,13 @@ public class WeatherService {
 
 
 
-    public List<WeatherDescriptionDTO> getDescriptions(List<Location> locations, WeatherApiService weatherApiService) {
+    public List<WeatherDescriptionDTO> getDescriptions(List<Location> locations, OpenWeatherApiService openWeatherApiService) {
         List<WeatherDescriptionDTO> descriptionsOfUserLocations = new ArrayList<>();
         for(Location location : locations) {
             double lat = location.getLatitude();
             double lon = location.getLongitude();
 
-            ResponseWeatherDTO responseWeatherDTO = weatherApiService.getWeatherByCoordinates(lat, lon);
+            ResponseWeatherDTO responseWeatherDTO = openWeatherApiService.getWeatherByCoordinates(lat, lon);
 
             WeatherDescriptionDTO weatherDescription = createDescriptionFromResponseDto(responseWeatherDTO);
             weatherDescription.setLocationId(location.getId());
