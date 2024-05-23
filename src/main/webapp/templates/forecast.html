@@ -33,14 +33,14 @@
 
 <div class="forecast-main-div">
 
-  <div th:text="${hourlyForecast.getFirst().getName()}" class="forecast-city-name">Stavropol</div>
+  <div th:text="${hourlyForecast.getFirst().getName()}" class="forecast-city-name"></div>
   <div class="hourly">hourly</div>
   <div th:each="forecast : ${hourlyForecast}" class="forecast-weather-block">
     <div class="forecast-hourly">
-          <div th:text="${forecast.getTime().getHour()+':00'}" class="forecast-time">ASASAS</div>
-          <div th:text="${forecast.getDescription()}" class="forecast-description">ASAS</div>
+          <div th:text="${forecast.getTime().getHour()+':00'}" class="forecast-time"></div>
+          <div th:text="${forecast.getDescription()}" class="forecast-description"></div>
           <img th:src="${forecast.getIconUrl()}" alt="weather-icon">
-          <div th:text="${forecast.getTemp()}" class="temp">ASASASASAS</div>
+          <div th:text="${forecast.getTemp()}" class="temp"></div>
     </div>
   </div>
 
