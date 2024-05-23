@@ -5,7 +5,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import ru.yuubi.weather_viewer.dto.WeatherDescriptionDTO;
+import ru.yuubi.weather_viewer.dto.RequestWeatherDTO;
 import ru.yuubi.weather_viewer.entity.Location;
 import ru.yuubi.weather_viewer.entity.SessionEntity;
 
@@ -31,9 +31,9 @@ public class HomeServlet extends BaseServlet {
         int startIndex = weatherService.getStartIndex(pageNumber);
         int endIndex = weatherService.getEndIndex(pageNumber, locations.size());
 
-        List<WeatherDescriptionDTO> descriptionsOfUserLocations = weatherService.getDescriptions(locations, openWeatherApiService);
+        List<RequestWeatherDTO> descriptionsOfUserLocations = weatherService.getDescriptions(locations, openWeatherApiService);
 
-        List<WeatherDescriptionDTO> descriptionsForParticularPage = descriptionsOfUserLocations.subList(startIndex, endIndex);
+        List<RequestWeatherDTO> descriptionsForParticularPage = descriptionsOfUserLocations.subList(startIndex, endIndex);
 
         context.setVariable("totalPages", totalPages);
         context.setVariable("currentPage", pageNumber);

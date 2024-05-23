@@ -8,7 +8,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class WeatherDescriptionDTO {
+public class RequestWeatherDTO {
     private int locationId;
     private double lat;
     private double lon;
@@ -20,9 +20,9 @@ public class WeatherDescriptionDTO {
     private String humidity;
     private String windSpeed;
     private String iconUrl;
-    public WeatherDescriptionDTO(String locationInfo, String weatherDescription, String temp,
-                                 String tempFeelsLike, String pressure, String humidity,
-                                 String windSpeed, String iconUrl, double lat, double lon) {
+    public RequestWeatherDTO(String locationInfo, String weatherDescription, String temp,
+                             String tempFeelsLike, String pressure, String humidity,
+                             String windSpeed, String iconUrl, double lat, double lon) {
         this.locationInfo = locationInfo;
         this.weatherDescription = weatherDescription;
         this.temp = temp;

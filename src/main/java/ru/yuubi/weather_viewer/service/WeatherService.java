@@ -3,7 +3,7 @@ package ru.yuubi.weather_viewer.service;
 import org.hibernate.SessionFactory;
 import ru.yuubi.weather_viewer.dao.LocationDAO;
 import ru.yuubi.weather_viewer.dto.ResponseWeatherDTO;
-import ru.yuubi.weather_viewer.dto.WeatherDescriptionDTO;
+import ru.yuubi.weather_viewer.dto.RequestWeatherDTO;
 import ru.yuubi.weather_viewer.entity.Location;
 
 import java.util.ArrayList;
@@ -25,7 +25,7 @@ public class WeatherService {
         locationDAO.deleteLocation(locationId);
     }
 
-    public WeatherDescriptionDTO createDescriptionFromResponseDto(ResponseWeatherDTO responseWeatherDTO) {
+    public RequestWeatherDTO convertToRequestWeatherDto(ResponseWeatherDTO responseWeatherDTO) {
         String locationInfo = responseWeatherDTO.getLocationName() + ", " + responseWeatherDTO.getCountryCode();
         String weatherDescription = responseWeatherDTO.getDescription();
 
@@ -54,8 +54,24 @@ public class WeatherService {
         double lat = responseWeatherDTO.getLatitude();
         double lon = responseWeatherDTO.getLongitude();
 
-        return new WeatherDescriptionDTO(locationInfo, weatherDescription, temp,
+        return new RequestWeatherDTO(locationInfo, weatherDescription, temp,
                 tempFeelsLike, pressure, humidity, windSpeed, iconUrl, lat, lon);
+    }
+
+    public List<RequestWeatherDTO> getDescriptions(List<Location> locations, OpenWeatherApiService openWeatherApiService) {
+        List<RequestWeatherDTO> descriptionsOfUserLocations = new ArrayList<>();
+        for(Location location : locations) {
+            double lat = location.getLatitude();
+            double lon = location.getLongitude();
+
+            ResponseWeatherDTO responseWeatherDTO = openWeatherApiService.getWeatherByCoordinates(lat, lon);
+
+            RequestWeatherDTO weatherDescription = convertToRequestWeatherDto(responseWeatherDTO);
+            weatherDescription.setLocationId(location.getId());
+
+            descriptionsOfUserLocations.add(weatherDescription);
+        }
+        return descriptionsOfUserLocations;
     }
 
     public boolean isUserAlreadyHasThisLocation(Location location) {
@@ -87,24 +103,6 @@ public class WeatherService {
 
     public int getEndIndex(int pageNumber, int listSize) {
         return Math.min(ITEMS_PER_PAGE*pageNumber, listSize);
-    }
-
-
-
-    public List<WeatherDescriptionDTO> getDescriptions(List<Location> locations, OpenWeatherApiService openWeatherApiService) {
-        List<WeatherDescriptionDTO> descriptionsOfUserLocations = new ArrayList<>();
-        for(Location location : locations) {
-            double lat = location.getLatitude();
-            double lon = location.getLongitude();
-
-            ResponseWeatherDTO responseWeatherDTO = openWeatherApiService.getWeatherByCoordinates(lat, lon);
-
-            WeatherDescriptionDTO weatherDescription = createDescriptionFromResponseDto(responseWeatherDTO);
-            weatherDescription.setLocationId(location.getId());
-
-            descriptionsOfUserLocations.add(weatherDescription);
-        }
-        return descriptionsOfUserLocations;
     }
 
     public WeatherService() {
