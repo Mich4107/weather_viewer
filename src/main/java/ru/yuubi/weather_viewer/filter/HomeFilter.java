@@ -12,7 +12,7 @@ import ru.yuubi.weather_viewer.entity.SessionEntity;
 import java.io.IOException;
 import java.time.LocalDateTime;
 
-@WebFilter({"/home","/locations"})
+@WebFilter({"/home","/locations","/forecast"})
 public class HomeFilter implements Filter {
     private SessionDAO sessionDAO = new SessionDAO();
 
