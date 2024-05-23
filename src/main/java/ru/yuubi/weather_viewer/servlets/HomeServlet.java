@@ -21,8 +21,8 @@ public class HomeServlet extends BaseServlet {
         SessionEntity sessionEntity = (SessionEntity) httpSession.getAttribute("sessionEntity");
         httpSession.removeAttribute("sessionEntity");
 
-        String login = authService.getUserLoginFromSessionEntity(sessionEntity);
         int userId = sessionEntity.getUserId();
+        String login = authService.getUserLoginById(userId);
 
         List<Location> locations = weatherService.getLocationsByUserId(userId);
 

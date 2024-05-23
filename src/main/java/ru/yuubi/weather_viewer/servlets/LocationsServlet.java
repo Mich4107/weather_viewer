@@ -30,7 +30,9 @@ public class LocationsServlet extends BaseServlet {
         HttpSession httpSession = req.getSession();
         SessionEntity sessionEntity = (SessionEntity) httpSession.getAttribute("sessionEntity");
         httpSession.removeAttribute("sessionEntity");
-        String login = authService.getUserLoginFromSessionEntity(sessionEntity);
+
+        int userId = sessionEntity.getUserId();
+        String login = authService.getUserLoginById(userId);
 
         List<LocationDTO> locations = openWeatherApiService.getLocationsByCityName(cityName);
 
