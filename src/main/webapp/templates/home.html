@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <title>Home</title>
     <link rel="stylesheet" href="../static/css/my.css">
-
 </head>
 <body>
 <header>
@@ -51,6 +50,13 @@
                 <div class="medium">
                     <p class="medium-text" th:text="${location.getWeatherDescription()}">Cloudies</p>
                     <p th:text="${location.getTempFeelsLike()}" style="color: #979997">Feels like +7</p>
+
+                    <form th:action="@{/forecast}" method="get" class="forecast-button">
+                        <input type="hidden" name="lat" th:value="${location.getLat()}">
+                        <input type="hidden" name="lon" th:value="${location.getLon()}">
+
+                        <button type="submit">Forecast</button>
+                    </form>
                 </div>
                 <div class="right">
                     <img class="ne-two" src="../static/img/wind.png" alt="ветер" width="25px" height=25px>
@@ -70,7 +76,6 @@
                         <img class="img-delete" src="../static/img/trashcan.png" alt="мусорка" width="22px" height=22px>
                     </button>
                 </div>
-
             </form>
 
         </div>
