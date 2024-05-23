@@ -34,14 +34,15 @@ public class AuthService {
         return userDAO.getUserByLogin(login);
     }
 
+    public String getUserLoginById(int userId) {
+        return userDAO.getUserById(userId).getLogin();
+    }
+
     public void saveSessionEntity(SessionEntity sessionEntity) {
         sessionDAO.save(sessionEntity);
     }
-
-    public String getUserLoginFromSessionEntity(SessionEntity sessionEntity) {
-        int userId = sessionEntity.getUserId();
-        User user = userDAO.getUserById(userId);
-        return user.getLogin();
+    public void removeSessionEntity(String GUID) {
+        sessionDAO.removeSession(GUID);
     }
 
     public AuthService() {
