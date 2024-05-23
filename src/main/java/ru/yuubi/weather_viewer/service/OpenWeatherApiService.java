@@ -3,9 +3,10 @@ package ru.yuubi.weather_viewer.service;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import ru.yuubi.weather_viewer.dto.ForecastDTO;
 import ru.yuubi.weather_viewer.dto.ResponseWeatherDTO;
 import ru.yuubi.weather_viewer.dto.LocationDTO;
-import ru.yuubi.weather_viewer.exception.WeatherApiException;
+import ru.yuubi.weather_viewer.exception.WeatherApiCallException;
 import ru.yuubi.weather_viewer.utils.ConfigReaderUtil;
 
 import java.io.IOException;
@@ -13,17 +14,23 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
 public class OpenWeatherApiService {
     private static final String API_KEY = ConfigReaderUtil.getApiKey();
     private static final String WEATHER_URL = "https://api.openweathermap.org/data/2.5/weather";
-    private static final String LOCATIONS_URL = "http://api.openweathermap.org/geo/1.0/direct";
+    private static final String LOCATIONS_URL = "https://api.openweathermap.org/geo/1.0/direct";
+    private static final String FORECAST_URL = "https://api.openweathermap.org/data/2.5/forecast";
     private HttpClient client;
 
     public ResponseWeatherDTO getWeatherByCoordinates(double lat, double lon){
-        String requestUrl = WEATHER_URL +"?lat="+lat+"&lon="+lon+"&appid="+ API_KEY +"&units=metric";
+        String requestUrl = WEATHER_URL
+                +"?lat="+lat
+                +"&lon="+lon
+                +"&appid="+API_KEY
+                +"&units=metric";
         try {
             String jsonResponse = getResponse(requestUrl);
             return getWeatherFromJson(jsonResponse);
@@ -32,8 +39,46 @@ public class OpenWeatherApiService {
         }
     }
 
+    public List<ForecastDTO> getHourlyForecastByCoordinates(double lat, double lon){
+        String requestUrl = FORECAST_URL
+                +"?lat="+lat
+                +"&lon="+lon
+                +"&cnt="+5
+                +"&units=metric"
+                +"&appid="+API_KEY;
+        try{
+            String jsonResponse = getResponse(requestUrl);
+            return getForecastFromJson(jsonResponse);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public List<ForecastDTO> getDailyForecast(double lat, double lon) {
+        List<ForecastDTO> hourlyForecastForFiveDays = getHourlyForecastForDailyForecastByCoordinates(lat, lon);
+
+        return null;
+    }
+    public List<ForecastDTO> getHourlyForecastForDailyForecastByCoordinates(double lat, double lon){
+        String requestUrl = FORECAST_URL
+                +"?lat="+lat
+                +"&lon="+lon
+                +"&cnt="+40
+                +"&units=metric"
+                +"&appid="+API_KEY;
+        try{
+            String jsonResponse = getResponse(requestUrl);
+            return getForecastFromJson(jsonResponse);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     public List<LocationDTO> getLocationsByCityName(String name) {
-        String requestURL = LOCATIONS_URL+"?q="+name+"&limit="+5+"&appid="+API_KEY;
+        String requestURL = LOCATIONS_URL
+                +"?q="+name
+                +"&limit="+5
+                +"&appid="+API_KEY;
         try {
             String jsonResponse = getResponse(requestURL);
             return getLocationsFromJson(jsonResponse);
@@ -41,6 +86,7 @@ public class OpenWeatherApiService {
             throw new RuntimeException(e);
         }
     }
+
     private String getResponse(String requestUrl) throws IOException {
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create(requestUrl))
@@ -55,10 +101,9 @@ public class OpenWeatherApiService {
         if(response.statusCode() == 200) {
             return response.body();
         } else {
-            throw new WeatherApiException("Something went wrong in the request to the API");
+            throw new WeatherApiCallException("Something went wrong in the request to the API");
         }
     }
-
     private ResponseWeatherDTO getWeatherFromJson(String jsonResponse) throws JsonProcessingException {
         ObjectMapper objectMapper = new ObjectMapper();
         JsonNode rootNode = objectMapper.readTree(jsonResponse);
@@ -108,6 +153,40 @@ public class OpenWeatherApiService {
         return locations;
     }
 
+    private List<ForecastDTO> getForecastFromJson(String jsonResponse) throws JsonProcessingException {
+        ObjectMapper objectMapper = new ObjectMapper();
+        JsonNode rootNode = objectMapper.readTree(jsonResponse);
+        List<ForecastDTO> forecast = new ArrayList<>();
+
+        JsonNode list = rootNode.get("list");
+        for (int i = 0; i < list.size(); i++) {
+            double temp = list.get(i).get("main").get("temp").asDouble();
+            int roundedTemp = (int) Math.round(temp);
+            String formattedTemp;
+            if(roundedTemp > 0) {
+                formattedTemp = "+"+roundedTemp+"°";
+            }  else {
+                formattedTemp = roundedTemp+"°";
+            }
+
+            String description = list.get(i).get("weather").get(0).get("description").asText();
+
+            String iconId = list.get(i).get("weather").get(0).get("icon").asText();
+            String iconUrl = "https://openweathermap.org/img/wn/"+iconId+"@2x.png";
+
+            String time = list.get(i).get("dt_txt").asText();
+            LocalDateTime formattedTime = parseToLocalDateTime(time);
+
+            String name = rootNode.get("city").get("name").asText();
+
+            ForecastDTO forecastDTO = new ForecastDTO(formattedTemp, description, iconUrl, formattedTime, name);
+
+            forecast.add(forecastDTO);
+        }
+
+        return forecast;
+    }
+
     public String fillSpaces(String cityName) {
         if(cityName.contains(" ")) {
             cityName = cityName.replaceAll(" ", "%20");
@@ -119,12 +198,17 @@ public class OpenWeatherApiService {
         return (int) Math.round(pressure * 0.75006157);
     }
 
+    private LocalDateTime parseToLocalDateTime(String time){
+        time = time.replaceAll(" ", "T");
+        return LocalDateTime.parse(time);
+    }
 
-    public WeatherApiService() {
+
+    public OpenWeatherApiService() {
         this.client = HttpClient.newHttpClient();
     }
 
-    public WeatherApiService(HttpClient client) {
+    public OpenWeatherApiService(HttpClient client) {
         this.client = client;
     }
 }
