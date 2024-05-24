@@ -58,8 +58,31 @@ public class WeatherService {
                 tempFeelsLike, pressure, humidity, windSpeed, iconUrl, lat, lon);
     }
 
-    public List<RequestWeatherDTO> getDescriptions(List<Location> locations, OpenWeatherApiService openWeatherApiService) {
-        List<RequestWeatherDTO> descriptionsOfUserLocations = new ArrayList<>();
+    public List<RequestForecastDTO> convertToRequestForecastDto(List<ResponseForecastDTO> forecasts){
+        List<RequestForecastDTO> formattedForecasts = new ArrayList<>();
+        for(ResponseForecastDTO forecast : forecasts) {
+            int roundedTemp = (int) Math.round(forecast.getTemp());
+            String formattedTemp;
+            if(roundedTemp > 0) {
+                formattedTemp = "+"+roundedTemp+"°";
+            }  else {
+                formattedTemp = roundedTemp+"°";
+            }
+            String description = forecast.getDescription();
+            String iconUrl = "https://openweathermap.org/img/wn/"+forecast.getIconId()+"@2x.png";
+            String time = forecast.getTime().replaceAll(" ", "T");
+            LocalDateTime formattedTime = LocalDateTime.parse(time);
+            String name = forecast.getName();
+
+            RequestForecastDTO formattedForecast = new RequestForecastDTO(formattedTemp, description, iconUrl, formattedTime, name);
+            formattedForecasts.add(formattedForecast);
+        }
+        return formattedForecasts;
+    }
+
+    public List<RequestWeatherDTO> formatDescriptions(List<ResponseWeatherDTO> descriptions, List<Location> locations) {
+        List<RequestWeatherDTO> formattedDescriptions = new ArrayList<>();
+
         for(Location location : locations) {
             double lat = location.getLatitude();
             double lon = location.getLongitude();
