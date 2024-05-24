@@ -25,10 +25,11 @@ public class ForecastServlet extends BaseServlet{
         int userId = sessionEntity.getUserId();
         String login = authService.getUserLoginById(userId);
 
-        List<ForecastDTO> hourlyForecast = openWeatherApiService.getHourlyForecastByCoordinates(lat, lon);
+        List<ResponseForecastDTO> hourlyForecasts = openWeatherApiService.getHourlyForecastByCoordinates(lat, lon);
+        List<RequestForecastDTO> formattedHourlyForecasts = weatherService.convertToRequestForecastDto(hourlyForecasts);
 
         context.setVariable("userLogin", login);
-        context.setVariable("hourlyForecast", hourlyForecast);
+        context.setVariable("hourlyForecast", formattedHourlyForecasts);
 
         templateEngine.process("forecast", context, resp.getWriter());
     }
