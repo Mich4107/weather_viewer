@@ -6,7 +6,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import ru.yuubi.weather_viewer.dto.LocationDTO;
-import ru.yuubi.weather_viewer.dto.ResponseWeatherDTO;
+import ru.yuubi.weather_viewer.dto.weather.ResponseWeatherDTO;
 import ru.yuubi.weather_viewer.entity.Location;
 import ru.yuubi.weather_viewer.entity.SessionEntity;
 import ru.yuubi.weather_viewer.entity.User;

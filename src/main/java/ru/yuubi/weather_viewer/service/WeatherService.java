@@ -2,10 +2,13 @@ package ru.yuubi.weather_viewer.service;
 
 import org.hibernate.SessionFactory;
 import ru.yuubi.weather_viewer.dao.LocationDAO;
-import ru.yuubi.weather_viewer.dto.ResponseWeatherDTO;
-import ru.yuubi.weather_viewer.dto.RequestWeatherDTO;
+import ru.yuubi.weather_viewer.dto.forecast.RequestForecastDTO;
+import ru.yuubi.weather_viewer.dto.forecast.ResponseForecastDTO;
+import ru.yuubi.weather_viewer.dto.weather.ResponseWeatherDTO;
+import ru.yuubi.weather_viewer.dto.weather.RequestWeatherDTO;
 import ru.yuubi.weather_viewer.entity.Location;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 

@@ -5,7 +5,8 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import ru.yuubi.weather_viewer.dto.ForecastDTO;
+import ru.yuubi.weather_viewer.dto.forecast.RequestForecastDTO;
+import ru.yuubi.weather_viewer.dto.forecast.ResponseForecastDTO;
 import ru.yuubi.weather_viewer.entity.SessionEntity;
 
 import java.io.IOException;
