@@ -84,17 +84,18 @@ public class WeatherService {
         List<RequestWeatherDTO> formattedDescriptions = new ArrayList<>();
 
         for(Location location : locations) {
-            double lat = location.getLatitude();
-            double lon = location.getLongitude();
+            double latitude = location.getLatitude();
+            double longitude = location.getLongitude();
 
-            ResponseWeatherDTO responseWeatherDTO = openWeatherApiService.getWeatherByCoordinates(lat, lon);
+            ResponseWeatherDTO description = descriptions.stream()
+                    .filter(desc -> desc.getLatitude() == latitude && desc.getLongitude() == longitude)
+                    .findFirst()
+                    .get();
 
-            RequestWeatherDTO weatherDescription = convertToRequestWeatherDto(responseWeatherDTO);
-            weatherDescription.setLocationId(location.getId());
-
-            descriptionsOfUserLocations.add(weatherDescription);
+            RequestWeatherDTO formattedDescription = convertToRequestWeatherDto(description);
+            formattedDescriptions.add(formattedDescription);
         }
-        return descriptionsOfUserLocations;
+        return formattedDescriptions;
     }
 
     public boolean isUserAlreadyHasThisLocation(Location location) {
