@@ -1,4 +1,4 @@
-package ru.yuubi.weather_viewer.dto;
+package ru.yuubi.weather_viewer.dto.weather;
 
 
 import lombok.AllArgsConstructor;

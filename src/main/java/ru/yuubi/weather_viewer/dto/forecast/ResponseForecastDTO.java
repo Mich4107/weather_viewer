@@ -1,4 +1,4 @@
-package ru.yuubi.weather_viewer.dto;
+package ru.yuubi.weather_viewer.dto.forecast;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -8,10 +8,10 @@ import java.time.LocalDateTime;
 
 @Getter
 @AllArgsConstructor
-public class ForecastDTO {
-    private String temp;
+public class ResponseForecastDTO {
+    private double temp;
     private String description;
-    private String iconUrl;
-    private LocalDateTime time;
+    private String iconId;
+    private String time;
     private String name;
 }
