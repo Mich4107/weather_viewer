@@ -35,6 +35,7 @@ public class LocationsServlet extends BaseServlet {
         String login = authService.getUserLoginById(userId);
 
         List<LocationDTO> locations = openWeatherApiService.getLocationsByCityName(cityName);
+        locations = weatherService.roundCoordinates(locations);
 
         context.setVariable("city_name", cityName);
         context.setVariable("locations", locations);
@@ -43,7 +44,7 @@ public class LocationsServlet extends BaseServlet {
     }
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         double lat = Double.parseDouble(req.getParameter("lat"));
         double lon = Double.parseDouble(req.getParameter("lon"));
         String userLogin = req.getParameter("user");
