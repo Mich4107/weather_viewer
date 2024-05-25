@@ -2,12 +2,15 @@ package ru.yuubi.weather_viewer.service;
 
 import org.hibernate.SessionFactory;
 import ru.yuubi.weather_viewer.dao.LocationDAO;
+import ru.yuubi.weather_viewer.dto.LocationDTO;
 import ru.yuubi.weather_viewer.dto.forecast.RequestForecastDTO;
 import ru.yuubi.weather_viewer.dto.forecast.ResponseForecastDTO;
 import ru.yuubi.weather_viewer.dto.weather.ResponseWeatherDTO;
 import ru.yuubi.weather_viewer.dto.weather.RequestWeatherDTO;
 import ru.yuubi.weather_viewer.entity.Location;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -29,6 +32,8 @@ public class WeatherService {
     }
 
     public RequestWeatherDTO convertToRequestWeatherDto(ResponseWeatherDTO responseWeatherDTO) {
+        int locationId = responseWeatherDTO.getLocationId();
+
         String locationInfo = responseWeatherDTO.getLocationName() + ", " + responseWeatherDTO.getCountryCode();
         String weatherDescription = responseWeatherDTO.getDescription();
 
@@ -57,8 +62,8 @@ public class WeatherService {
         double lat = responseWeatherDTO.getLatitude();
         double lon = responseWeatherDTO.getLongitude();
 
-        return new RequestWeatherDTO(locationInfo, weatherDescription, temp,
-                tempFeelsLike, pressure, humidity, windSpeed, iconUrl, lat, lon);
+        return new RequestWeatherDTO(locationId, lat, lon, locationInfo,
+                weatherDescription, temp, tempFeelsLike, pressure, humidity, windSpeed, iconUrl);
     }
 
     public List<RequestForecastDTO> convertToRequestForecastDto(List<ResponseForecastDTO> forecasts){
@@ -83,21 +88,14 @@ public class WeatherService {
         return formattedForecasts;
     }
 
-    public List<RequestWeatherDTO> formatDescriptions(List<ResponseWeatherDTO> descriptions, List<Location> locations) {
+    public List<RequestWeatherDTO> formatDescriptions(List<ResponseWeatherDTO> descriptions) {
         List<RequestWeatherDTO> formattedDescriptions = new ArrayList<>();
 
-        for(Location location : locations) {
-            double latitude = location.getLatitude();
-            double longitude = location.getLongitude();
-
-            ResponseWeatherDTO description = descriptions.stream()
-                    .filter(desc -> desc.getLatitude() == latitude && desc.getLongitude() == longitude)
-                    .findFirst()
-                    .get();
-
+        for(ResponseWeatherDTO description : descriptions) {
             RequestWeatherDTO formattedDescription = convertToRequestWeatherDto(description);
             formattedDescriptions.add(formattedDescription);
         }
+
         return formattedDescriptions;
     }
 
@@ -107,7 +105,7 @@ public class WeatherService {
 
         int userId = location.getUserId();
 
-        Location userLocation = locationDAO.getLocationByLatAndLon(lat, lon, userId);
+        Location userLocation = locationDAO.getByLatAndLonAndUserId(lat, lon, userId);
 
         return userLocation != null;
     }
@@ -138,5 +136,25 @@ public class WeatherService {
 
     public WeatherService(SessionFactory sessionFactory) {
         this.locationDAO = new LocationDAO(sessionFactory);
+    }
+
+    public List<LocationDTO> roundCoordinates(List<LocationDTO> locations) {
+        for(LocationDTO location : locations) {
+            double lat = location.getLatitude();
+            double lon = location.getLongitude();
+
+            BigDecimal bigDecimalLat = new BigDecimal(Double.toString(lat));
+            BigDecimal bigDecimalLon = new BigDecimal(Double.toString(lon));
+
+            bigDecimalLat = bigDecimalLat.setScale(4, RoundingMode.HALF_UP);
+            bigDecimalLon = bigDecimalLon.setScale(4, RoundingMode.HALF_UP);
+
+            double roundedLat = bigDecimalLat.doubleValue();
+            double roundedLon = bigDecimalLon.doubleValue();
+
+            location.setLatitude(roundedLat);
+            location.setLongitude(roundedLon);
+        }
+        return locations;
     }
 }
