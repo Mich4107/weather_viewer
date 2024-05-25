@@ -40,18 +40,19 @@ public class OpenWeatherApiService {
     }
 
     public List<ResponseWeatherDTO> getWeathersByLocations(List<Location> locations) {
-        List<ResponseWeatherDTO> descriptionOfWeathers = new ArrayList<>();
+        List<ResponseWeatherDTO> descriptionsOfWeathers = new ArrayList<>();
 
         for(Location location : locations) {
             double latitude = location.getLatitude();
             double longitude = location.getLongitude();
 
-            ResponseWeatherDTO weather = getWeatherByCoordinates(latitude, longitude);
+            ResponseWeatherDTO description = getWeatherByCoordinates(latitude, longitude);
+            description.setLocationId(location.getId());
 
-            descriptionOfWeathers.add(weather);
+            descriptionsOfWeathers.add(description);
         }
 
-        return descriptionOfWeathers;
+        return descriptionsOfWeathers;
     }
 
     public List<ResponseForecastDTO> getHourlyForecastByCoordinates(double lat, double lon){
