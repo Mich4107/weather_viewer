@@ -33,7 +33,7 @@ public class HomeServlet extends BaseServlet {
         int endIndex = weatherService.getEndIndex(pageNumber, locations.size());
 
         List<ResponseWeatherDTO> descriptions = openWeatherApiService.getWeathersByLocations(locations);
-        List<RequestWeatherDTO> formattedDescriptions = weatherService.formatDescriptions(descriptions, locations);
+        List<RequestWeatherDTO> formattedDescriptions = weatherService.formatDescriptions(descriptions);
 
         List<RequestWeatherDTO> descriptionsForParticularPage = formattedDescriptions.subList(startIndex, endIndex);
 
