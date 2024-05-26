@@ -64,18 +64,13 @@ public class OpenWeatherApiService {
                 +"&appid="+API_KEY;
         try{
             String jsonResponse = getResponse(requestUrl);
-            return getForecastsFromJson(jsonResponse);
+            return getForecastFromJson(jsonResponse);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
 
-    public List<ForecastDTO> getDailyForecast(double lat, double lon) {
-        List<ForecastDTO> hourlyForecastForFiveDays = getHourlyForecastForDailyForecastByCoordinates(lat, lon);
-
-        return null;
-    }
-    public List<ResponseForecastDTO> getHourlyForecastForDailyForecastByCoordinates(double lat, double lon){
+    public List<ResponseForecastDTO> getHourlyForecastForFiveDaysByCoordinates(double lat, double lon){
         String requestUrl = FORECAST_URL
                 +"?lat="+lat
                 +"&lon="+lon
@@ -84,7 +79,7 @@ public class OpenWeatherApiService {
                 +"&appid="+API_KEY;
         try{
             String jsonResponse = getResponse(requestUrl);
-            return getForecastsFromJson(jsonResponse);
+            return getForecastFromJson(jsonResponse);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -169,7 +164,7 @@ public class OpenWeatherApiService {
         return locations;
     }
 
-    private List<ResponseForecastDTO> getForecastsFromJson(String jsonResponse) throws JsonProcessingException {
+    private List<ResponseForecastDTO> getForecastFromJson(String jsonResponse) throws JsonProcessingException {
         ObjectMapper objectMapper = new ObjectMapper();
         JsonNode rootNode = objectMapper.readTree(jsonResponse);
         List<ResponseForecastDTO> forecast = new ArrayList<>();
