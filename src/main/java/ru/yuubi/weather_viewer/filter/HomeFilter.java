@@ -32,7 +32,7 @@ public class HomeFilter implements Filter {
         for(Cookie c : cookies) {
             if(c.getName().equals(searchCookieName)) {
                 String sessionGUID = c.getValue();
-                SessionEntity sessionEntity = sessionDAO.getSessionEntity(sessionGUID);
+                SessionEntity sessionEntity = sessionDAO.findByGUID(sessionGUID);
 
                 if(sessionEntity != null) {
                     c.setMaxAge(60*60*24);

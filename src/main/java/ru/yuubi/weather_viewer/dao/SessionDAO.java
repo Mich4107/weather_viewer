@@ -13,7 +13,7 @@ public class SessionDAO {
 
     private SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
 
-    public void removeSession(String GUID) {
+    public void remove(String GUID) {
         Session session = sessionFactory.getCurrentSession();
 
         try(session) {
@@ -43,7 +43,7 @@ public class SessionDAO {
         }
     }
 
-    public SessionEntity getSessionEntity(String GUID) {
+    public SessionEntity findByGUID(String GUID) {
         Session session = sessionFactory.getCurrentSession();
         SessionEntity sessionEntity;
         try(session) {

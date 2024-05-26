@@ -8,7 +8,7 @@ import ru.yuubi.weather_viewer.utils.HibernateUtil;
 public class UserDAO {
     private SessionFactory sessionFactory;
 
-    public User getUserById(int id) {
+    public User findById(int id) {
         User user;
         Session session = sessionFactory.getCurrentSession();
         try(session) {
@@ -19,7 +19,7 @@ public class UserDAO {
         return user;
     }
 
-    public User getUserByLogin(String login) {
+    public User findByLogin(String login) {
         User user;
         Session session = sessionFactory.getCurrentSession();
         try(session) {
@@ -30,7 +30,7 @@ public class UserDAO {
         }
         return user;
     }
-    public void saveUser(User user) {
+    public void save(User user) {
         Session session = sessionFactory.getCurrentSession();
         try(session) {
             session.beginTransaction();

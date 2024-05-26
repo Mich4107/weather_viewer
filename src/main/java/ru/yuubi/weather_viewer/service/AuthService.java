@@ -15,11 +15,11 @@ public class AuthService {
         String password = user.getPassword();
         String hashedPassword = PasswordEncryptorUtil.hashPassword(password);
         user.setPassword(hashedPassword);
-        userDAO.saveUser(user);
+        userDAO.save(user);
     }
 
     public User getUserByLoginAndPassword(String login, String password) {
-        User user = userDAO.getUserByLogin(login);
+        User user = userDAO.findByLogin(login);
         if(user != null) {
             String hashedPasswordFromDB = user.getPassword();
             boolean isPasswordsEquals = PasswordEncryptorUtil.checkPassword(password, hashedPasswordFromDB);
@@ -31,18 +31,18 @@ public class AuthService {
     }
 
     public User getUserByLogin(String login) {
-        return userDAO.getUserByLogin(login);
+        return userDAO.findByLogin(login);
     }
 
     public String getUserLoginById(int userId) {
-        return userDAO.getUserById(userId).getLogin();
+        return userDAO.findById(userId).getLogin();
     }
 
     public void saveSessionEntity(SessionEntity sessionEntity) {
         sessionDAO.save(sessionEntity);
     }
     public void removeSessionEntity(String GUID) {
-        sessionDAO.removeSession(GUID);
+        sessionDAO.remove(GUID);
     }
 
     public AuthService() {

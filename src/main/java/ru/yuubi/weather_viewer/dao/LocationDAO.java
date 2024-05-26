@@ -11,7 +11,7 @@ import java.util.List;
 public class LocationDAO {
     private SessionFactory sessionFactory;
 
-    public void saveLocation(Location location) {
+    public void save(Location location) {
         Session session = sessionFactory.getCurrentSession();
         try(session) {
             session.beginTransaction();
@@ -20,7 +20,7 @@ public class LocationDAO {
         }
     }
 
-    public List<Location> getLocationsByUserId(int id) {
+    public List<Location> findByUserId(int id) {
         Session session = sessionFactory.getCurrentSession();
         try(session) {
             session.beginTransaction();
@@ -36,7 +36,7 @@ public class LocationDAO {
         }
     }
 
-    public Location getLocationByLatAndLon(double lat, double lon, int userId) {
+    public Location findByLatAndLonAndUserId(double lat, double lon, int userId) {
         Session session = sessionFactory.getCurrentSession();
         try(session) {
             session.beginTransaction();
@@ -55,7 +55,7 @@ public class LocationDAO {
         }
     }
 
-    public void deleteLocation(int id) {
+    public void delete(int id) {
         Session session = sessionFactory.getCurrentSession();
         try(session) {
             session.beginTransaction();

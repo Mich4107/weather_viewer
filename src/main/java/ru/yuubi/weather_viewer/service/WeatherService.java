@@ -19,15 +19,15 @@ public class WeatherService {
     private LocationDAO locationDAO;
 
     public void saveLocation(Location location){
-        locationDAO.saveLocation(location);
+        locationDAO.save(location);
     }
 
     public List<Location> getLocationsByUserId (int userId) {
-        return locationDAO.getLocationsByUserId(userId);
+        return locationDAO.findByUserId(userId);
     }
 
     public void deleteLocation(int locationId) {
-        locationDAO.deleteLocation(locationId);
+        locationDAO.delete(locationId);
     }
 
 
@@ -196,7 +196,7 @@ public class WeatherService {
 
         int userId = location.getUserId();
 
-        Location userLocation = locationDAO.getByLatAndLonAndUserId(lat, lon, userId);
+        Location userLocation = locationDAO.findByLatAndLonAndUserId(lat, lon, userId);
 
         return userLocation != null;
     }
