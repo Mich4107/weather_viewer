@@ -1,4 +1,4 @@
-package ru.yuubi.weather_viewer.servlets.auth;
+package ru.yuubi.weather_viewer.servlets.authentication;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -26,13 +26,13 @@ public class RegistrationServlet extends BaseServlet {
         String decodedPassword = StringEscapeUtils.unescapeHtml4(password);
 
         User user = new User(decodedLogin, decodedPassword);
-        if(authService.getUserByLogin(decodedLogin) != null) {
+        if(authenticationService.getUserByLogin(decodedLogin) != null) {
             context.setVariable("userAlreadyExists", "login already exists");
             templateEngine.process("signup", context, resp.getWriter());
             return;
         }
 
-        authService.saveUser(user);
+        authenticationService.saveUser(user);
 
         int userId = user.getId();
 
@@ -41,7 +41,7 @@ public class RegistrationServlet extends BaseServlet {
         resp.addCookie(cookie);
 
         Session session = new Session(cookie.getValue(), userId, LocalDateTime.now().plusSeconds(60*60*24));
-        authService.saveSessionEntity(session);
+        authenticationService.saveSessionEntity(session);
 
         resp.sendRedirect("/home");
     }

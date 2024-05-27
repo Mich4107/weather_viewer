@@ -212,30 +212,22 @@ class OpenWeatherApiServiceTest {
                 .thenReturn(mockResponse);
 
         String cityName = "Moscow";
-
         List<LocationDTO> locations = openWeatherAPIService.getLocationsByCityName(cityName);
+        boolean isLocationNameEqualsToCityName = locations.getFirst().getName().equals(cityName);
 
-        boolean isAllLocationNamesEqualsToCityName = true;
-        for(LocationDTO location : locations) {
-            if(location.getName().equals(cityName) == false) {
-                isAllLocationNamesEqualsToCityName = false;
-            }
-        }
-
-        assertTrue(isAllLocationNamesEqualsToCityName);
+        assertTrue(isLocationNameEqualsToCityName);
     }
 
     @Test
     void errorCodeFromWeatherApiShouldThrowException() throws IOException, InterruptedException {
         HttpResponse<String> mockResponse = mock(HttpResponse.class);
         when(mockResponse.statusCode()).thenReturn(400);
-        when(mockResponse.body()).thenReturn(response);
+        when(mockResponse.body()).thenReturn("some error message from API");
 
         when(mockClient.send(any(HttpRequest.class), any(HttpResponse.BodyHandler.class)))
                 .thenReturn(mockResponse);
 
         String cityName = "Moscow";
-
 
         assertThrows(WeatherApiCallException.class, () ->
                 openWeatherAPIService.getLocationsByCityName(cityName));

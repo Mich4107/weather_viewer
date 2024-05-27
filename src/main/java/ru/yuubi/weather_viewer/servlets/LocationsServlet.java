@@ -1,6 +1,5 @@
 package ru.yuubi.weather_viewer.servlets;
 
-import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -19,7 +18,7 @@ import java.util.List;
 @WebServlet("/locations")
 public class LocationsServlet extends BaseServlet {
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         String cityName = openWeatherApiService.fillSpaces(req.getParameter("city_name"));
         String status = req.getParameter("status");
 
@@ -32,7 +31,7 @@ public class LocationsServlet extends BaseServlet {
         httpSession.removeAttribute("sessionEntity");
 
         int userId = session.getUserId();
-        String login = authService.getUserLoginById(userId);
+        String login = authenticationService.getUserLoginById(userId);
 
         List<LocationDTO> locations = openWeatherApiService.getLocationsByCityName(cityName);
         locations = weatherService.roundCoordinates(locations);
@@ -50,7 +49,7 @@ public class LocationsServlet extends BaseServlet {
         String userLogin = req.getParameter("user");
 
         ResponseWeatherDTO responseWeatherDTO = openWeatherApiService.getWeatherByCoordinates(lat, lon);
-        User user = authService.getUserByLogin(userLogin);
+        User user = authenticationService.getUserByLogin(userLogin);
         String locationName = responseWeatherDTO.getLocationName();
         int userId = user.getId();
 

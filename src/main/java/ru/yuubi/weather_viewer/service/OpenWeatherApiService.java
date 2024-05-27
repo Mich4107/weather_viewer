@@ -59,22 +59,7 @@ public class OpenWeatherApiService {
         String requestUrl = FORECAST_URL
                 +"?lat="+lat
                 +"&lon="+lon
-                +"&cnt="+5
-                +"&units=metric"
-                +"&appid="+API_KEY;
-        try{
-            String jsonResponse = getResponse(requestUrl);
-            return getForecastFromJson(jsonResponse);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    public List<ResponseForecastDTO> getHourlyForecastForFiveDaysByCoordinates(double lat, double lon){
-        String requestUrl = FORECAST_URL
-                +"?lat="+lat
-                +"&lon="+lon
-                +"&cnt="+40
+                +"&cnt="+10
                 +"&units=metric"
                 +"&appid="+API_KEY;
         try{

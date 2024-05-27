@@ -7,7 +7,7 @@ import ru.yuubi.weather_viewer.model.Session;
 import ru.yuubi.weather_viewer.model.User;
 import ru.yuubi.weather_viewer.utils.PasswordEncryptorUtil;
 
-public class AuthService {
+public class AuthenticationService {
     private SessionDAO sessionDAO;
     private UserDAO userDAO;
 
@@ -45,12 +45,12 @@ public class AuthService {
         sessionDAO.remove(GUID);
     }
 
-    public AuthService() {
+    public AuthenticationService() {
         this.userDAO = new UserDAO();
         this.sessionDAO = new SessionDAO();
     }
 
-    public AuthService(SessionFactory sessionFactory){
+    public AuthenticationService(SessionFactory sessionFactory){
         this.userDAO = new UserDAO(sessionFactory);
         this.sessionDAO = new SessionDAO(sessionFactory);
     }

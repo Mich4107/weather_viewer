@@ -1,4 +1,4 @@
-package ru.yuubi.weather_viewer.servlets.auth;
+package ru.yuubi.weather_viewer.servlets.authentication;
 
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.Cookie;
@@ -25,7 +25,7 @@ public class DeauthenticationServlet extends BaseServlet {
                 String sessionGUIDValue = cookie.getValue();
                 cookie.setMaxAge(0);
                 resp.addCookie(cookie);
-                authService.removeSessionEntity(sessionGUIDValue);
+                authenticationService.removeSessionEntity(sessionGUIDValue);
             }
         }
         resp.sendRedirect("/signin");

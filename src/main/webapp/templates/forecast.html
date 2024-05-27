@@ -8,7 +8,6 @@
 </head>
 <body>
 <div th:replace="~{header-component}"></div>
-
 <div class="forecast-main-div">
   <div th:text="${hourlyForecast.getFirst().getName()}" class="forecast-city-name"></div>
   <div class="hourly">hourly</div>
@@ -21,24 +20,6 @@
     </div>
   </div>
 </div>
-
-<div class="forecast-main-div-2">
-  <div class="hourly">daily</div>
-  <div th:each="forecast : ${dailyForecast}" class="forecast-weather-block">
-    <div class="forecast-hourly">
-      <div th:text="${forecast.getTime().getDayOfMonth()+' '+forecast.getTime().getMonth()}" class="forecast-time"></div>
-      <div th:text="${forecast.getDescription()}" class="forecast-description"></div>
-      <img th:src="${forecast.getIconUrl()}" alt="weather-icon">
-      <br th:if="${forecast.getDayTemp()} != null">
-        <div th:text="${forecast.getDayTemp()}" class="temp-1"></div>
-      </br>
-      <br th:if="${forecast.getNightTemp() != null}">
-        <div th:text="${forecast.getNightTemp()}" class="temp-2"></div>
-      </br>
-    </div>
-  </div>
-</div>
-
 <div th:replace="~{footer-component}"></div>
 </body>
 </html>

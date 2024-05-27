@@ -1,4 +1,4 @@
-package ru.yuubi.weather_viewer.servlets.auth;
+package ru.yuubi.weather_viewer.servlets.authentication;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -33,7 +33,7 @@ public class AuthenticationServlet extends BaseServlet {
         String decodedLogin = StringEscapeUtils.unescapeHtml4(login);
         String decodedPassword = StringEscapeUtils.unescapeHtml4(password);
 
-        User user = authService.getUserByLoginAndPassword(decodedLogin, decodedPassword);
+        User user = authenticationService.getUserByLoginAndPassword(decodedLogin, decodedPassword);
 
         if(user == null) {
             resp.sendRedirect("/signin?status=wrong-password");
@@ -47,7 +47,7 @@ public class AuthenticationServlet extends BaseServlet {
         resp.addCookie(cookie);
 
         Session session = new Session(cookie.getValue(), userId, LocalDateTime.now().plusSeconds(60*60*24));
-        authService.saveSessionEntity(session);
+        authenticationService.saveSessionEntity(session);
 
         resp.sendRedirect("/home");
     }

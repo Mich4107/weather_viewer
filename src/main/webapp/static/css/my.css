@@ -411,15 +411,27 @@ header {
 }
 .forecast-hourly img {
     position: absolute;
-    width: 160px;
-    height: 160px;
+    width: 90px;
+    height: 90px;
     margin-top: -10px;
-    margin-left: -25px;
 }
 .temp {
     position: absolute;
     margin-top: 160px;
     font-size: 28px;
+}
+
+.temp-1{
+    position: absolute;
+    margin-top: 110px;
+    font-size: 28px;
+
+}
+.temp-2 {
+     position: absolute;
+     margin-top: 160px;
+     font-size: 18px;
+     color: #979997;
 }
 .forecast-city-name {
     display: inline-block;
@@ -430,6 +442,12 @@ header {
 .forecast-main-div {
     position: relative;
     margin-top: 20px;
+    width: 950px;
+    margin-left: 27%;
+}
+.forecast-main-div-2 {
+    position: relative;
+    margin-top: 50px;
     width: 950px;
     margin-left: 27%;
 }

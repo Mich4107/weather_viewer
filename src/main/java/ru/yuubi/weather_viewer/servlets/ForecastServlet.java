@@ -23,13 +23,13 @@ public class ForecastServlet extends BaseServlet{
         double lon = Double.parseDouble(req.getParameter("lon"));
 
         int userId = session.getUserId();
-        String login = authService.getUserLoginById(userId);
+        String login = authenticationService.getUserLoginById(userId);
 
-        List<ResponseForecastDTO> hourlyForecasts = openWeatherApiService.getHourlyForecastByCoordinates(lat, lon);
-        List<RequestForecastDTO> formattedHourlyForecasts = weatherService.convertToRequestForecastDto(hourlyForecasts);
+        List<ResponseForecastDTO> hourlyForecast = openWeatherApiService.getHourlyForecastByCoordinates(lat, lon);
+        List<RequestForecastDTO> formattedHourlyForecast = weatherService.convertToRequestForecastDtoList(hourlyForecast);
 
         context.setVariable("userLogin", login);
-        context.setVariable("hourlyForecast", formattedHourlyForecasts);
+        context.setVariable("hourlyForecast", formattedHourlyForecast);
 
         templateEngine.process("forecast", context, resp.getWriter());
     }

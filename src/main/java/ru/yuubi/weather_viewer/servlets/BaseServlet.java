@@ -9,14 +9,14 @@ import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.WebContext;
 import org.thymeleaf.web.IWebExchange;
 import org.thymeleaf.web.servlet.JakartaServletWebApplication;
-import ru.yuubi.weather_viewer.service.AuthService;
+import ru.yuubi.weather_viewer.service.AuthenticationService;
 import ru.yuubi.weather_viewer.service.OpenWeatherApiService;
 import ru.yuubi.weather_viewer.service.WeatherService;
 
 import java.io.IOException;
 
 public class BaseServlet extends HttpServlet {
-    protected AuthService authService = new AuthService();
+    protected AuthenticationService authenticationService = new AuthenticationService();
     protected WeatherService weatherService = new WeatherService();
     protected OpenWeatherApiService openWeatherApiService = new OpenWeatherApiService();
     protected TemplateEngine templateEngine;

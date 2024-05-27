@@ -23,7 +23,7 @@ public class HomeServlet extends BaseServlet {
         httpSession.removeAttribute("sessionEntity");
 
         int userId = session.getUserId();
-        String login = authService.getUserLoginById(userId);
+        String login = authenticationService.getUserLoginById(userId);
 
         List<Location> locations = weatherService.getLocationsByUserId(userId);
 
