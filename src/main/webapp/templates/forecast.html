@@ -7,32 +7,9 @@
   <link rel="stylesheet" href="../static/css/my.css">
 </head>
 <body>
-<header>
-  <a href="/home" class="header-url">
-    <div class="company-logo-name">
-      <img src="../static/img/6793083-84.png" height="64" width="64"/>
-      <span class="company-name">Weather Viewer</span>
-    </div>
-  </a>
-  <form th:action="@{/locations}" method="get" class="locations-search">
-    <input type="text" name="city_name" placeholder="Search..." style="margin-left: 65px" required>
-    <button type="submit">
-      <img src="../static/img/search.png"
-           height="25"
-           width="25" /></button>
-  </form>
-
-  <div class="user">
-    <p th:text="${userLogin}"></p>
-    <form action="/logout" method="post" class="logout-button">
-      <button type="submit">logout</button>
-    </form>
-  </div>
-</header>
-
+<div th:replace="~{header-component}"></div>
 
 <div class="forecast-main-div">
-
   <div th:text="${hourlyForecast.getFirst().getName()}" class="forecast-city-name"></div>
   <div class="hourly">hourly</div>
   <div th:each="forecast : ${hourlyForecast}" class="forecast-weather-block">
@@ -43,16 +20,25 @@
           <div th:text="${forecast.getTemp()}" class="temp"></div>
     </div>
   </div>
-
-
 </div>
 
-<footer class="footer">
-  <div class="container">
-    <hr class="footer-separator"/>
-    <p>Made by Mich4107</p>
+<div class="forecast-main-div-2">
+  <div class="hourly">daily</div>
+  <div th:each="forecast : ${dailyForecast}" class="forecast-weather-block">
+    <div class="forecast-hourly">
+      <div th:text="${forecast.getTime().getDayOfMonth()+' '+forecast.getTime().getMonth()}" class="forecast-time"></div>
+      <div th:text="${forecast.getDescription()}" class="forecast-description"></div>
+      <img th:src="${forecast.getIconUrl()}" alt="weather-icon">
+      <br th:if="${forecast.getDayTemp()} != null">
+        <div th:text="${forecast.getDayTemp()}" class="temp-1"></div>
+      </br>
+      <br th:if="${forecast.getNightTemp() != null}">
+        <div th:text="${forecast.getNightTemp()}" class="temp-2"></div>
+      </br>
+    </div>
   </div>
-</footer>
+</div>
 
+<div th:replace="~{footer-component}"></div>
 </body>
 </html>

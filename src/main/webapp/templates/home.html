@@ -6,27 +6,7 @@
     <link rel="stylesheet" href="../static/css/my.css">
 </head>
 <body>
-<header>
-    <div class="company-logo-name">
-        <img src="../static/img/6793083-84.png" height="64" width="64"/>
-        <span class="company-name">Weather Viewer</span>
-    </div>
-
-    <form th:action="@{/locations}" method="get" class="locations-search">
-        <input type="text" name="city_name" placeholder="Search..." required title="Enter the city" style="margin-left: 65px">
-        <button type="submit">
-            <img src="../static/img/search.png"
-                 height="25"
-                 width="25" /></button>
-    </form>
-
-    <div class="user">
-        <p th:text="${userLogin}"></p>
-        <form action="/logout" method="post" class="logout-button">
-            <button type="submit">logout</button>
-        </form>
-    </div>
-</header>
+<div th:replace="~{header-component}"></div>
 
 <div th:if="${userLocations.isEmpty()}">
     <div class="weathers">
@@ -36,7 +16,6 @@
         </div>
     </div>
 </div>
-
 
 <div th:each="location : ${userLocations}">
     <div class="location-weather-block">
@@ -67,8 +46,6 @@
                     <p class="down" th:text="${location.getPressure()}">782</p><br>
                 </div>
             </div>
-
-
             <form th:action="@{/home}" method="post">
                 <input type="hidden" name="locationId" th:value="${location.getLocationId()}">
                 <div class="delete">
@@ -77,37 +54,25 @@
                     </button>
                 </div>
             </form>
-
         </div>
     </div>
 </div>
 
-
 <div class="page-numbers">
     <div th:if="${totalPages} > 1">
-
         <span th:if="${currentPage - 1} >= 1" class="left-cursor">
             <a th:href="'/home?page='+${currentPage - 1}"> < </a>
         </span>
-
         <span th:each="pageNumber : ${#numbers.sequence(1, totalPages)}">
             <a th:href="'/home?page='+${pageNumber}"><span th:text="${pageNumber}"></span></a>
         </span>
-
         <span th:if="${currentPage+1 <= totalPages}">
             <a th:href="'/home?page='+${currentPage + 1}"> > </a>
         </span>
-
     </div>
 </div>
 
 
-<footer class="footer">
-    <div class="container">
-        <hr class="footer-separator"/>
-        <p>Made by Mich4107</p>
-    </div>
-</footer>
-
+<div th:replace="~{footer-component}"></div>
 </body>
 </html>

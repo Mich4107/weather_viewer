@@ -6,29 +6,7 @@
     <link rel="stylesheet" href="../static/css/my.css">
 </head>
 <body>
-<header>
-    <a href="/home" class="header-url">
-        <div class="company-logo-name">
-            <img src="../static/img/6793083-84.png" height="64" width="64"/>
-            <span class="company-name">Weather Viewer</span>
-        </div>
-    </a>
-
-    <form th:action="@{/locations}" method="get" class="locations-search">
-        <input type="text" name="city_name" placeholder="Search..." style="margin-left: 65px" required>
-        <button type="submit">
-            <img src="../static/img/search.png"
-                 height="25"
-                 width="25" /></button>
-    </form>
-
-    <div class="user">
-        <p th:text="${userLogin}"></p>
-        <form action="/logout" method="post" class="logout-button">
-            <button type="submit">logout</button>
-        </form>
-    </div>
-</header>
+<div th:replace="~{header-component}"></div>
 
 <div th:if="${locations.isEmpty()}">
     <div class="weathers">
@@ -38,7 +16,6 @@
         </div>
     </div>
 </div>
-
 
 <div th:if="${userAlreadyHasThisLocation}">
     <div class="weathers-da">
@@ -74,7 +51,6 @@
                          width="35" /></button>
             </form>
             <div class="central-line">
-
             </div>
         </div>
     </div>
@@ -86,11 +62,7 @@
     </form>
 </div>
 
-<footer class="footer">
-    <div class="container">
-        <hr class="footer-separator"/>
-        <p>Made by Mich4107</p>
-    </div>
-</footer>
+<div th:replace="~{footer-component}"></div>
+
 </body>
 </html>
