@@ -3,7 +3,7 @@ package ru.yuubi.weather_viewer.dao;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
-import ru.yuubi.weather_viewer.entity.Location;
+import ru.yuubi.weather_viewer.model.Location;
 import ru.yuubi.weather_viewer.utils.HibernateUtil;
 
 import java.util.List;

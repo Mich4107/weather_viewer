@@ -2,7 +2,7 @@ package ru.yuubi.weather_viewer.dao;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import ru.yuubi.weather_viewer.entity.User;
+import ru.yuubi.weather_viewer.model.User;
 import ru.yuubi.weather_viewer.utils.HibernateUtil;
 
 public class UserDAO {

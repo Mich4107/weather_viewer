@@ -5,9 +5,9 @@ import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.cfg.Environment;
 import org.hibernate.service.ServiceRegistry;
-import ru.yuubi.weather_viewer.entity.Location;
-import ru.yuubi.weather_viewer.entity.SessionEntity;
-import ru.yuubi.weather_viewer.entity.User;
+import ru.yuubi.weather_viewer.model.Location;
+import ru.yuubi.weather_viewer.model.SessionEntity;
+import ru.yuubi.weather_viewer.model.User;
 
 import java.util.Properties;
 

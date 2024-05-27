@@ -1,6 +1,6 @@
 import config.HibernateUtil;
 import org.junit.jupiter.api.Test;
-import ru.yuubi.weather_viewer.entity.User;
+import ru.yuubi.weather_viewer.model.User;
 import ru.yuubi.weather_viewer.service.AuthService;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;

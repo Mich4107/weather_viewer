@@ -5,10 +5,10 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import ru.yuubi.weather_viewer.dto.weather.RequestWeatherDTO;
-import ru.yuubi.weather_viewer.dto.weather.ResponseWeatherDTO;
-import ru.yuubi.weather_viewer.entity.Location;
-import ru.yuubi.weather_viewer.entity.SessionEntity;
+import ru.yuubi.weather_viewer.model.dto.weather.RequestWeatherDTO;
+import ru.yuubi.weather_viewer.model.dto.weather.ResponseWeatherDTO;
+import ru.yuubi.weather_viewer.model.Location;
+import ru.yuubi.weather_viewer.model.SessionEntity;
 
 import java.io.IOException;
 import java.util.List;

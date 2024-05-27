@@ -3,10 +3,10 @@ package ru.yuubi.weather_viewer.service;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import ru.yuubi.weather_viewer.dto.forecast.ResponseForecastDTO;
-import ru.yuubi.weather_viewer.dto.weather.ResponseWeatherDTO;
-import ru.yuubi.weather_viewer.dto.LocationDTO;
-import ru.yuubi.weather_viewer.entity.Location;
+import ru.yuubi.weather_viewer.model.dto.forecast.ResponseForecastDTO;
+import ru.yuubi.weather_viewer.model.dto.weather.ResponseWeatherDTO;
+import ru.yuubi.weather_viewer.model.dto.LocationDTO;
+import ru.yuubi.weather_viewer.model.Location;
 import ru.yuubi.weather_viewer.exception.WeatherApiCallException;
 import ru.yuubi.weather_viewer.utils.ConfigReaderUtil;
 

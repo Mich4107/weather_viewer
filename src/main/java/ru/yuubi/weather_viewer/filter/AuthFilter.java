@@ -6,7 +6,7 @@ import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import ru.yuubi.weather_viewer.dao.SessionDAO;
-import ru.yuubi.weather_viewer.entity.SessionEntity;
+import ru.yuubi.weather_viewer.model.SessionEntity;
 
 import java.io.IOException;
 

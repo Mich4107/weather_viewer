@@ -1,4 +1,4 @@
-package ru.yuubi.weather_viewer.entity;
+package ru.yuubi.weather_viewer.model;
 
 import jakarta.persistence.*;
 

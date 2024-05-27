@@ -1,5 +1,5 @@
 import org.junit.jupiter.api.Test;
-import ru.yuubi.weather_viewer.dto.LocationDTO;
+import ru.yuubi.weather_viewer.model.dto.LocationDTO;
 import ru.yuubi.weather_viewer.exception.WeatherApiCallException;
 import ru.yuubi.weather_viewer.service.OpenWeatherApiService;
 

@@ -3,8 +3,8 @@ package ru.yuubi.weather_viewer.service;
 import org.hibernate.SessionFactory;
 import ru.yuubi.weather_viewer.dao.SessionDAO;
 import ru.yuubi.weather_viewer.dao.UserDAO;
-import ru.yuubi.weather_viewer.entity.SessionEntity;
-import ru.yuubi.weather_viewer.entity.User;
+import ru.yuubi.weather_viewer.model.SessionEntity;
+import ru.yuubi.weather_viewer.model.User;
 import ru.yuubi.weather_viewer.utils.PasswordEncryptorUtil;
 
 public class AuthService {

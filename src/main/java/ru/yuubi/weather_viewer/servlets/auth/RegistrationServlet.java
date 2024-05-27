@@ -4,8 +4,8 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.*;
 import org.apache.commons.lang3.StringEscapeUtils;
-import ru.yuubi.weather_viewer.entity.SessionEntity;
-import ru.yuubi.weather_viewer.entity.User;
+import ru.yuubi.weather_viewer.model.SessionEntity;
+import ru.yuubi.weather_viewer.model.User;
 import ru.yuubi.weather_viewer.servlets.BaseServlet;
 
 import java.io.IOException;
