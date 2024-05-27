@@ -7,7 +7,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import ru.yuubi.weather_viewer.dao.SessionDAO;
-import ru.yuubi.weather_viewer.model.SessionEntity;
+import ru.yuubi.weather_viewer.model.Session;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
@@ -32,17 +32,17 @@ public class HomeFilter implements Filter {
         for(Cookie c : cookies) {
             if(c.getName().equals(searchCookieName)) {
                 String sessionGUID = c.getValue();
-                SessionEntity sessionEntity = sessionDAO.findByGUID(sessionGUID);
+                Session session = sessionDAO.findByGUID(sessionGUID);
 
-                if(sessionEntity != null) {
+                if(session != null) {
                     c.setMaxAge(60*60*24);
                     resp.addCookie(c);
 
-                    sessionEntity.setExpiresAt(LocalDateTime.now().plusSeconds(60*60*24));
-                    sessionDAO.update(sessionEntity);
+                    session.setExpiresAt(LocalDateTime.now().plusSeconds(60*60*24));
+                    sessionDAO.update(session);
 
                     HttpSession httpSession = req.getSession();
-                    httpSession.setAttribute("sessionEntity", sessionEntity);
+                    httpSession.setAttribute("sessionEntity", session);
 
                     filterChain.doFilter(servletRequest, servletResponse);
                     return;

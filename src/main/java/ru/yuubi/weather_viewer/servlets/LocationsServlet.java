@@ -8,7 +8,7 @@ import jakarta.servlet.http.HttpSession;
 import ru.yuubi.weather_viewer.model.dto.LocationDTO;
 import ru.yuubi.weather_viewer.model.dto.weather.ResponseWeatherDTO;
 import ru.yuubi.weather_viewer.model.Location;
-import ru.yuubi.weather_viewer.model.SessionEntity;
+import ru.yuubi.weather_viewer.model.Session;
 import ru.yuubi.weather_viewer.model.User;
 
 import java.io.IOException;
@@ -28,10 +28,10 @@ public class LocationsServlet extends BaseServlet {
         }
 
         HttpSession httpSession = req.getSession();
-        SessionEntity sessionEntity = (SessionEntity) httpSession.getAttribute("sessionEntity");
+        Session session = (Session) httpSession.getAttribute("sessionEntity");
         httpSession.removeAttribute("sessionEntity");
 
-        int userId = sessionEntity.getUserId();
+        int userId = session.getUserId();
         String login = authService.getUserLoginById(userId);
 
         List<LocationDTO> locations = openWeatherApiService.getLocationsByCityName(cityName);

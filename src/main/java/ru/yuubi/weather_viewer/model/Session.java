@@ -6,7 +6,7 @@ import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "sessions")
-public class SessionEntity {
+public class Session {
     @Id
     private String id;
     @Column(name = "UserId")
@@ -20,13 +20,13 @@ public class SessionEntity {
     private User user;
 
 
-    public SessionEntity(String id, int userId, LocalDateTime expiresAt) {
+    public Session(String id, int userId, LocalDateTime expiresAt) {
         this.id = id;
         this.userId = userId;
         this.expiresAt = expiresAt;
     }
 
-    public SessionEntity() {
+    public Session() {
     }
 
     public String getId() {

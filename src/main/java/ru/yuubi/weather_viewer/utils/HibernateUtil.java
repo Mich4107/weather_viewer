@@ -6,7 +6,7 @@ import org.hibernate.cfg.Configuration;
 import org.hibernate.cfg.Environment;
 import org.hibernate.service.ServiceRegistry;
 import ru.yuubi.weather_viewer.model.Location;
-import ru.yuubi.weather_viewer.model.SessionEntity;
+import ru.yuubi.weather_viewer.model.Session;
 import ru.yuubi.weather_viewer.model.User;
 
 import java.util.Properties;
@@ -34,7 +34,7 @@ public class HibernateUtil {
 
                 configuration.addAnnotatedClass(User.class);
                 configuration.addAnnotatedClass(Location.class);
-                configuration.addAnnotatedClass(SessionEntity.class);
+                configuration.addAnnotatedClass(Session.class);
 
                 ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder()
                         .applySettings(configuration.getProperties()).build();

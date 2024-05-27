@@ -3,7 +3,7 @@ package ru.yuubi.weather_viewer.service;
 import org.hibernate.SessionFactory;
 import ru.yuubi.weather_viewer.dao.SessionDAO;
 import ru.yuubi.weather_viewer.dao.UserDAO;
-import ru.yuubi.weather_viewer.model.SessionEntity;
+import ru.yuubi.weather_viewer.model.Session;
 import ru.yuubi.weather_viewer.model.User;
 import ru.yuubi.weather_viewer.utils.PasswordEncryptorUtil;
 
@@ -38,8 +38,8 @@ public class AuthService {
         return userDAO.findById(userId).getLogin();
     }
 
-    public void saveSessionEntity(SessionEntity sessionEntity) {
-        sessionDAO.save(sessionEntity);
+    public void saveSessionEntity(Session session) {
+        sessionDAO.save(session);
     }
     public void removeSessionEntity(String GUID) {
         sessionDAO.remove(GUID);

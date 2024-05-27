@@ -4,7 +4,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.*;
 import org.apache.commons.lang3.StringEscapeUtils;
-import ru.yuubi.weather_viewer.model.SessionEntity;
+import ru.yuubi.weather_viewer.model.Session;
 import ru.yuubi.weather_viewer.model.User;
 import ru.yuubi.weather_viewer.servlets.BaseServlet;
 
@@ -46,8 +46,8 @@ public class AuthenticationServlet extends BaseServlet {
         cookie.setMaxAge(60*60*24);
         resp.addCookie(cookie);
 
-        SessionEntity sessionEntity = new SessionEntity(cookie.getValue(), userId, LocalDateTime.now().plusSeconds(60*60*24));
-        authService.saveSessionEntity(sessionEntity);
+        Session session = new Session(cookie.getValue(), userId, LocalDateTime.now().plusSeconds(60*60*24));
+        authService.saveSessionEntity(session);
 
         resp.sendRedirect("/home");
     }

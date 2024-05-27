@@ -6,7 +6,7 @@ import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import ru.yuubi.weather_viewer.dao.SessionDAO;
-import ru.yuubi.weather_viewer.model.SessionEntity;
+import ru.yuubi.weather_viewer.model.Session;
 
 import java.io.IOException;
 
@@ -30,8 +30,8 @@ public class AuthFilter implements Filter {
         for(Cookie c : cookies) {
             if(c.getName().equals(searchCookieName)) {
                 String sessionGUID = c.getValue();
-                SessionEntity sessionEntity = sessionDAO.findByGUID(sessionGUID);
-                if(sessionEntity != null) {
+                Session session = sessionDAO.findByGUID(sessionGUID);
+                if(session != null) {
                     resp.sendRedirect("/home");
                     return;
                 }

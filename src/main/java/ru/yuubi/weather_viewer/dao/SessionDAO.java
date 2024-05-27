@@ -1,9 +1,8 @@
 package ru.yuubi.weather_viewer.dao;
 
 import jakarta.persistence.Query;
-import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import ru.yuubi.weather_viewer.model.SessionEntity;
+import ru.yuubi.weather_viewer.model.Session;
 import ru.yuubi.weather_viewer.utils.HibernateUtil;
 
 import java.time.LocalDateTime;
@@ -14,12 +13,12 @@ public class SessionDAO {
     private SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
 
     public void remove(String GUID) {
-        Session session = sessionFactory.getCurrentSession();
+        org.hibernate.Session session = sessionFactory.getCurrentSession();
 
         try(session) {
             session.beginTransaction();
 
-            String hql = "delete from SessionEntity where id = :GUID";
+            String hql = "delete from Session where id = :GUID";
             Query query = session.createQuery(hql);
             query.setParameter("GUID", GUID);
             query.executeUpdate();
@@ -29,12 +28,12 @@ public class SessionDAO {
     }
 
     public void removeExpiredSessions(){
-        Session session = sessionFactory.getCurrentSession();
+        org.hibernate.Session session = sessionFactory.getCurrentSession();
         try(session) {
             session.beginTransaction();
 
             LocalDateTime localDateTime = LocalDateTime.now();
-            String hql = "delete from SessionEntity where expiresAt < :localDateTime";
+            String hql = "delete from Session where expiresAt < :localDateTime";
             Query query = session.createQuery(hql);
             query.setParameter("localDateTime", localDateTime);
             query.executeUpdate();
@@ -43,27 +42,27 @@ public class SessionDAO {
         }
     }
 
-    public SessionEntity findByGUID(String GUID) {
-        Session session = sessionFactory.getCurrentSession();
-        SessionEntity sessionEntity;
+    public Session findByGUID(String GUID) {
+        org.hibernate.Session session = sessionFactory.getCurrentSession();
+        Session sessionEntity;
         try(session) {
             session.beginTransaction();
-            sessionEntity = session.get(SessionEntity.class, GUID);
+            sessionEntity = session.get(Session.class, GUID);
             session.getTransaction().commit();
         }
         return sessionEntity;
     }
 
-    public void save(SessionEntity sessionEntity) {
-        Session session = sessionFactory.getCurrentSession();
+    public void save(Session sessionEntity) {
+        org.hibernate.Session session = sessionFactory.getCurrentSession();
         try(session) {
             session.beginTransaction();
             session.persist(sessionEntity);
             session.getTransaction().commit();
         }
     }
-    public void update(SessionEntity sessionEntity) {
-        Session session = sessionFactory.getCurrentSession();
+    public void update(Session sessionEntity) {
+        org.hibernate.Session session = sessionFactory.getCurrentSession();
         try(session) {
             session.beginTransaction();
             session.merge(sessionEntity);

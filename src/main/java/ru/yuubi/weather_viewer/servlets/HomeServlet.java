@@ -8,7 +8,7 @@ import jakarta.servlet.http.HttpSession;
 import ru.yuubi.weather_viewer.model.dto.weather.RequestWeatherDTO;
 import ru.yuubi.weather_viewer.model.dto.weather.ResponseWeatherDTO;
 import ru.yuubi.weather_viewer.model.Location;
-import ru.yuubi.weather_viewer.model.SessionEntity;
+import ru.yuubi.weather_viewer.model.Session;
 
 import java.io.IOException;
 import java.util.List;
@@ -19,10 +19,10 @@ public class HomeServlet extends BaseServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         HttpSession httpSession = req.getSession();
-        SessionEntity sessionEntity = (SessionEntity) httpSession.getAttribute("sessionEntity");
+        Session session = (Session) httpSession.getAttribute("sessionEntity");
         httpSession.removeAttribute("sessionEntity");
 
-        int userId = sessionEntity.getUserId();
+        int userId = session.getUserId();
         String login = authService.getUserLoginById(userId);
 
         List<Location> locations = weatherService.getLocationsByUserId(userId);
