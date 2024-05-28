@@ -21,7 +21,7 @@ to display a list of locations with their current weather. User also can see hou
 
 ## Interface
 ![img_2.png](src/main/webapp/static/img/img_2.png)
-![img_1.png](src/main/webapp/static/img/img_1.png)
+![img.png](src/main/webapp/static/img/img.png)
 
 ## Functionality
 
