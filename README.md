@@ -11,7 +11,6 @@
 ![Thymeleaf](https://img.shields.io/badge/Thymeleaf-black?style=for-the-badge&logo=thymeleaf&logoColor=white)
 ![Apache Maven](https://img.shields.io/badge/Apache%20Maven-black?style=for-the-badge&logo=Apache%20Maven&logoColor=white)
 
-___
 
 ## About project
 
@@ -23,7 +22,6 @@ to display a list of locations with their current weather. User also can see hou
 ## Interface
 ![img_2.png](src/main/webapp/static/img/img_2.png)
 ![img_1.png](src/main/webapp/static/img/img_1.png)
-___
 
 ## Functionality
 
@@ -69,7 +67,7 @@ Using what was described above, you can identify the user and give him access to
 
 However, sessions in the database are deleted if the user has not visited the site for a long time. Cookies are deleted from his browser, and sessions in the database are periodically cleared.
 
-
+---
 
 
 
