@@ -38,7 +38,7 @@ public class HomeFilter implements Filter {
                     c.setMaxAge(60*60*24);
                     resp.addCookie(c);
 
-                    session.setExpiresAt(LocalDateTime.now().plusSeconds(1));
+                    session.setExpiresAt(LocalDateTime.now().plusDays(1));
                     sessionDAO.update(session);
 
                     HttpSession httpSession = req.getSession();
