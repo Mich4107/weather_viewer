@@ -247,8 +247,10 @@ header {
 }
 
 .up, .medium-da, .down {
+    position: relative;
     display: inline;
     align-items: center;
+    top: -7px
 }
 
 .up, .medium-da {
@@ -259,6 +261,8 @@ header {
     margin-left: -20px;
     margin-right: 20px;
 }
+
+
 
 
 
