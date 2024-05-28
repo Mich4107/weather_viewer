@@ -1,7 +1,13 @@
 package ru.yuubi.weather_viewer.model;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
+@Getter
+@Setter
+@NoArgsConstructor
 @Entity
 @Table(name = "locations")
 public class Location {
@@ -25,53 +31,11 @@ public class Location {
     @ManyToOne
     @JoinColumn(name = "UserId", insertable = false, updatable = false)
     private User user;
-    public Location() {
-    }
 
     public Location(String name, int userId, double latitude, double longitude) {
         this.name = name;
         this.userId = userId;
         this.latitude = latitude;
-        this.longitude = longitude;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public int getUserId() {
-        return userId;
-    }
-
-    public void setUserId(int userId) {
-        this.userId = userId;
-    }
-
-    public double getLatitude() {
-        return latitude;
-    }
-
-    public void setLatitude(double latitude) {
-        this.latitude = latitude;
-    }
-
-    public double getLongitude() {
-        return longitude;
-    }
-
-    public void setLongitude(double longitude) {
         this.longitude = longitude;
     }
 }

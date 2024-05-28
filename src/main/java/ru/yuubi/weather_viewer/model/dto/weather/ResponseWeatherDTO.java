@@ -1,14 +1,11 @@
 package ru.yuubi.weather_viewer.model.dto.weather;
 
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
-import lombok.ToString;
 
 @Getter
 @Setter
-@ToString
 public class ResponseWeatherDTO {
     private int locationId;
     private double longitude;
