@@ -65,7 +65,7 @@ The application uses cookies and sessions. Cookie is storing in user's browser a
 
 Using what was described above, you can identify the user and give him access to the site without signing in again.
 
-However, sessions in the database are deleted if the user has not visited the site for a long time. Cookies are deleted from his browser, and sessions in the database are periodically cleared.
+However, sessions in the database are deleted if the user has not visited the site for a long time. Cookies are deleted from his browser automatically after the expiration of the period that we have defined in the backend, and sessions in the database are periodically cleared.
 
 ---
 
