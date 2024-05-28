@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 public class SessionDAO {
 
 
-    private SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
+    private SessionFactory sessionFactory;
 
     public void remove(String GUID) {
         org.hibernate.Session session = sessionFactory.getCurrentSession();
@@ -71,6 +71,7 @@ public class SessionDAO {
     }
 
     public SessionDAO() {
+        this.sessionFactory = HibernateUtil.getSessionFactory();
     }
 
     public SessionDAO(SessionFactory sessionFactory) {
