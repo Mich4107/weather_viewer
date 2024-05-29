@@ -33,7 +33,7 @@ public class BaseServlet extends HttpServlet {
     protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         webExchange = JakartaServletWebApplication.buildApplication(getServletContext()).buildExchange(req, resp);
         context = new WebContext(webExchange);
-        try{
+        try {
             super.service(req, resp);
         } catch (Exception e) {
             context.setVariable("error", e.getMessage());

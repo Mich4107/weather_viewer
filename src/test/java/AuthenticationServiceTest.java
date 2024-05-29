@@ -5,7 +5,6 @@ import ru.yuubi.weather_viewer.model.User;
 import ru.yuubi.weather_viewer.service.AuthenticationService;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
 
 class AuthenticationServiceTest {
 

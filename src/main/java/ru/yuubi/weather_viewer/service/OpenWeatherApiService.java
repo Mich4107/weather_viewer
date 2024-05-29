@@ -48,6 +48,7 @@ public class OpenWeatherApiService {
 
             ResponseWeatherDTO description = getWeatherByCoordinates(latitude, longitude);
             description.setLocationId(location.getId());
+            description.setLocationName(location.getName());
 
             descriptionsOfWeathers.add(description);
         }

@@ -22,7 +22,7 @@ public class LocationsServlet extends BaseServlet {
         String cityName = openWeatherApiService.fillSpaces(req.getParameter("city_name"));
         String status = req.getParameter("status");
 
-        if(status != null) {
+        if (status != null) {
             context.setVariable("userAlreadyHasThisLocation", true);
         }
 
@@ -48,17 +48,17 @@ public class LocationsServlet extends BaseServlet {
         double lon = Double.parseDouble(req.getParameter("lon"));
         String userLogin = req.getParameter("user");
 
-        ResponseWeatherDTO responseWeatherDTO = openWeatherApiService.getWeatherByCoordinates(lat, lon);
+//        ResponseWeatherDTO responseWeatherDTO = openWeatherApiService.getWeatherByCoordinates(lat, lon);
         User user = authenticationService.getUserByLogin(userLogin);
-        String locationName = responseWeatherDTO.getLocationName();
+        String locationName = req.getParameter("location_name");
         int userId = user.getId();
 
         Location location = new Location(locationName, userId, lat, lon);
 
-        if(weatherService.isUserAlreadyHasThisLocation(location)) {
+        if (weatherService.isUserAlreadyHasThisLocation(location)) {
             String cityName = req.getParameter("city_name");
             String encodedCityName = URLEncoder.encode(cityName, StandardCharsets.UTF_8);
-            resp.sendRedirect("/locations?city_name="+encodedCityName+"&status=hasLoc");
+            resp.sendRedirect("/locations?city_name=" + encodedCityName + "&status=hasLoc");
             return;
         }
 
