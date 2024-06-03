@@ -24,7 +24,7 @@ public class WeatherService {
         return locationDAO.findByUserId(userId);
     }
     public void deleteLocation(int locationId) {
-        locationDAO.delete(locationId);
+        locationDAO.remove(locationId);
     }
 
     public RequestWeatherDTO convertToRequestWeatherDto(ResponseWeatherDTO responseWeatherDTO) {

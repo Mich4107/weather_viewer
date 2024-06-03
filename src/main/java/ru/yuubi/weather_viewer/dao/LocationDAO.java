@@ -55,7 +55,7 @@ public class LocationDAO {
         }
     }
 
-    public void delete(int id) {
+    public void remove(int id) {
         Session session = sessionFactory.getCurrentSession();
         try(session) {
             session.beginTransaction();
